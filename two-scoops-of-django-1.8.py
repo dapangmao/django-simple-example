@@ -1866,7 +1866,7 @@ class TestIceCreamSorting(unittest.TestCase):
             list_flavors_sorted()
 
 
-"""------------------chapter_22_example_8.py-----------------"""
+"""------------------chapter_22_example_8.py-----------------
 
     allow us to run our test suite
     locally.."""
@@ -1890,7 +1890,7 @@ DATABASES = {
         "PORT": "",
     },
 }
-
+"""
 
 """------------------chapter_23_example_2.py-----------------"""
 
@@ -1907,7 +1907,7 @@ if sys.argv[-1] == 'md2rst':
 CSRF_COOKIE_SECURE = True
 
 
-"""------------------chapter_26_example_10.py-----------------"""
+"""------------------chapter_26_example_10.py-----------------
 
 >>> payment = IceCreamPayment()
 >>> IceCreamPayment.objects.get(id=payment.id)
@@ -1917,6 +1917,7 @@ UUID('0b0fb68e-5b06-44af-845a-01b6df5e0967')
 >>> IceCreamPayment.objects.get(uuid=payment.uuid)
 <IceCreamPayment: 1>
 
+"""
 
 """------------------chapter_26_example_3.py-----------------"""
 
