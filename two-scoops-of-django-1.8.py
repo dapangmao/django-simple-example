@@ -66,10 +66,6 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
 
-"""------------------chapter_05_example_18.json-----------------"""
-
-
-
 """------------------chapter_05_example_19.py-----------------"""
 
 
@@ -280,10 +276,6 @@ def fun_function(**kwargs):
 from models.customers import Customer
 
 customers = Customer.objects.filter(scoops_ordered__gt=F('store_visits'))
-
-
-"""------------------chapter_07_example_5.sql-----------------"""
-
 
 
 """------------------chapter_07_example_6.py-----------------"""
@@ -1583,65 +1575,6 @@ class SiteMapView(TemplateView):
         return Flavor.objects.all() 
 
 
-"""------------------chapter_17_example_2.xml-----------------"""
-
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {# Snip the home page, contact, etc #}
-    {% for flavor in view.flavors %}
-       <url>
-          <loc>{{ site.domain }}/app/#{{ flavor.slug }}</loc>
-          <lastmod>{{ flavor.modified }}</lastmod>
-          <changefreq>monthly</changefreq>
-          <priority>0.8</priority>
-       </url>
-    {% endfor %}
-</urlset>      
-
-
-"""------------------chapter_17_example_3.js-----------------"""
-
-// CSRF helper functions taken directly from Django docs
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie != '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = jQuery.trim(cookies[i]);
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) == (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
-var csrftoken = getCookie('csrftoken');
-function csrfSafeMethod(method) {
-  // these HTTP methods do not require CSRF protection
-  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-  beforeSend: function(xhr, settings) {
-    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    }
-  }
-});
-
-
-"""------------------chapter_17_example_5.js-----------------"""
-
-var newSync = Backbone.sync;
-Backbone.sync = function(method, model, options){
-    options.beforeSend = function(xhr){
-        xhr.setRequestHeader('X-CSRFToken', CSRF_TOKEN);
-    };
-    return newSync(method, model, options);
-};
-
-
 """------------------chapter_19_example_1.py-----------------"""
 
 from django.utils.encoding import python_2_unicode_compatible
@@ -1957,29 +1890,6 @@ DATABASES = {
         "PORT": "",
     },
 }
-
-
-"""------------------chapter_23_example_1.rst-----------------"""
-
-        print("I like Ice Cream")
-
-    for i in range(10):
-        like()
-
-Python colored code block (requires pygments):
-
-code-block:: python
-
-    # You need to "pip install pygments" to make this work.
-
-    for i in range(10):
-        like()
-
-JavaScript colored code block:
-
-code-block:: javascript
-
-    console.log("Don't use alert()");
 
 
 """------------------chapter_23_example_2.py-----------------"""
