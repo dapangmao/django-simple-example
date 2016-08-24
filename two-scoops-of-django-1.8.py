@@ -1,4 +1,6 @@
-"""------------------chapter_01_example_1.py-----------------"""
+""" CODING STYLE
+
+------------------chapter_01_example_1.py-----------------"""
 
 from __future__ import absolute_import
 from math import sqrt
@@ -43,7 +45,8 @@ from django.db import models
     ]
 
 
-"""------------------chapter_05_example_14.py-----------------"""
+""" SETTINGS AND ENVIRONMENT FILES
+------------------chapter_05_example_14.py-----------------"""
 
 import os
 SOME_SECRET_KEY = os.environ["SOME_SECRET_KEY"]
@@ -166,7 +169,9 @@ from .local import *
 CACHE_TIMEOUT = 30
 
 
-"""------------------chapter_06_example_1.py-----------------"""
+""" MODEL BEST PRACTICE
+
+------------------chapter_06_example_1.py-----------------"""
 
 from django.db import models
 
@@ -216,7 +221,9 @@ class FlavorReview(models.Model):
     objects = PublishedManager()
 
 
-"""------------------chapter_07_example_1.py-----------------"""
+""" QUERY AND DATABASE LAYER
+
+------------------chapter_07_example_1.py-----------------"""
 
 
 from flavors.models import Flavor
@@ -318,7 +325,9 @@ def posting_flavor_status(request, pk, status):
     return HttpResponse("Sadness", status_code=400)
 
 
-"""------------------chapter_08_example_1.py-----------------"""
+""" FUNCTION AND CLASS BASED VIEWS
+
+------------------chapter_08_example_1.py-----------------"""
 
 from django.views.generic import ListView, DetailView, UpdateView
 from django.core.urlresolvers import reverse
@@ -370,7 +379,6 @@ class SimplestView(View):
 """------------------chapter_08_example_2.py-----------------"""
 
 from django.conf.urls import url
-
 from . import views
 
 urlpatterns = [
@@ -427,7 +435,6 @@ urlpatterns += [
 """------------------chapter_08_example_8.py-----------------"""
 
 from django.conf.urls import url
-
 from . import views
 
 urlpatterns = [
@@ -448,8 +455,9 @@ HttpResponse = View.as_view()(HttpRequest)
 
 
 
-"""------------------chapter_09_example_1.py-----------------"""
+""" BEST PRACTICE FOR FUNCTION BASED VIEW
 
+------------------chapter_09_example_1.py-----------------"""
 
 from django.core.exceptions import PermissionDenied
 
@@ -462,7 +470,6 @@ def check_sprinkle_rights(request):
 
 
 """------------------chapter_09_example_2.py-----------------"""
-
 
 from django.core.exceptions import PermissionDenied
 
@@ -481,7 +488,6 @@ def check_sprinkles(request):
 
 
 """------------------chapter_09_example_3.py-----------------"""
-
 
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -521,7 +527,6 @@ def sprinkle_preview(request):
 """------------------chapter_09_example_4.py-----------------"""
 
 from django.views.generic import DetailView
-
 from .utils import check_sprinkles
 from .models import Sprinkle
 
@@ -534,7 +539,6 @@ class SprinkleDetail(DetailView):
         request = check_sprinkles(request)
         return super(SprinkleDetail, self).dispatch(
                                 request, *args, **kwargs)
-
 
 
 """------------------chapter_09_example_5.py-----------------"""
@@ -591,8 +595,8 @@ def sprinkle_detail(request, pk):
         {"sprinkle": sprinkle})
 
 
-"""------------------chapter_10_example_1.py-----------------"""
-
+""" BEST PRACTICE FOR CLASS BASED VIEW
+------------------chapter_10_example_1.py-----------------"""
 
 class FreshFruitMixin(object):
 
@@ -687,9 +691,7 @@ class PDFFlavorView(LoginRequiredMixin, View):
 """------------------chapter_10_example_2.py-----------------"""
 
 from django.views.generic import DetailView
-
 from braces.views import LoginRequiredMixin
-
 from .models import Flavor
 
 class FlavorDetailView(LoginRequiredMixin, DetailView):
@@ -698,9 +700,7 @@ class FlavorDetailView(LoginRequiredMixin, DetailView):
 
 """------------------chapter_10_example_3.py-----------------"""
 
-
 from braces.views import LoginRequiredMixin
-
 from .models import Flavor
 
 class FlavorCreateView(LoginRequiredMixin, CreateView):
@@ -714,9 +714,7 @@ class FlavorCreateView(LoginRequiredMixin, CreateView):
 
 """------------------chapter_10_example_4.py-----------------"""
 
-
 from braces.views import LoginRequiredMixin
-
 from .models import Flavor
 
 class FlavorCreateView(LoginRequiredMixin, CreateView):
@@ -730,9 +728,7 @@ class FlavorCreateView(LoginRequiredMixin, CreateView):
 """------------------chapter_10_example_5.py-----------------"""
 
 from django.views.generic import UpdateView, TemplateView
-
 from braces.views import LoginRequiredMixin
-
 from .models import Flavor
 from .tasks import update_users_who_favorited
 
@@ -787,9 +783,7 @@ class Flavor(models.Model):
 """------------------chapter_10_example_8.py-----------------"""
 
 from django.views.generic import CreateView, UpdateView, DetailView
-
 from braces.views import LoginRequiredMixin
-
 from .models import Flavor
 
 class FlavorCreateView(LoginRequiredMixin, CreateView):
@@ -840,12 +834,11 @@ class FlavorDetailView(DetailView):
     model = Flavor
 
 
-"""------------------chapter_11_example_1.py-----------------"""
+""" FORM FUNDAMENTALS
+------------------chapter_11_example_1.py-----------------"""
 
 import StringIO
-
 from django import forms
-
 from .models import Purchase, Seller
 
 class PurchaseForm(forms.ModelForm):
@@ -866,9 +859,7 @@ class PurchaseForm(forms.ModelForm):
         return seller
 
 def add_csv_purchases(rows):
-
     rows = StringIO.StringIO(rows)
-
     records_added = 0
     errors = []
     # Generate a dict per row, with the first CSV row being the keys.
@@ -887,13 +878,7 @@ def add_csv_purchases(rows):
     return records_added, errors
 
 
-
-"""------------------chapter_11_example_2.py-----------------"""
-
-
-
 """------------------chapter_11_example_4.py-----------------"""
-
 
 from .models import Taster
 
