@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404, reverse
+from django.views.decorators.cache import cache_page
 
 from django.http import HttpResponseRedirect
 from .models import Question
 
 
+@cache_page(60)
 def index(request):
     last_five_questions = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': last_five_questions}
-    return render(request, 'polls/index.html', context)
+    return render(request, 'polls/index.html', {'latest_question_list': last_five_questions})
 
 
 def detail(request, question_id):
