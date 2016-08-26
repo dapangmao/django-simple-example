@@ -15,5 +15,5 @@ class Follower(models.Model):
 
 class Message(models.Model):
     author_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.CharField(max_length=100)
+    text = models.CharField(max_length=3000)
     pub_date = models.DateTimeField('date published')

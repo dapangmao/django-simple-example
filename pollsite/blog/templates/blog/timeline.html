@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+
+<!--{% url 'polls:detail' question.id %}-->
+
 {% block title %}
   {% if request.endpoint == 'public_timeline' %}
     Public Timeline
@@ -8,6 +11,7 @@
     My Timeline
   {% endif %}
 {% endblock %}
+
 {% block body %}
   <h2>{{ self.title() }}</h2>
   {% if g.user %}
@@ -25,6 +29,7 @@
           }}">Follow user</a>.
       {% endif %}
       </div>
+
     {% elif request.endpoint == 'timeline' %}
       <div class="twitbox">
         <h3>What's on your mind {{ g.user.username }}?</h3>
@@ -34,7 +39,9 @@
         </form>
       </div>
     {% endif %}
+
   {% endif %}
+
   <ul class="messages">
   {% for message in messages %}
     <li><img src="{{ message.email|gravatar(size=48) }}"><p>

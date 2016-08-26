@@ -9,7 +9,13 @@ def gravatar_url(email, size=80):
     return 'http://www.gravatar.com/avatar/%s?d=identicon&s=%d' % \
         (md5(email.strip().lower().encode('utf-8')).hexdigest(), size)
 
+"""
+TODO: django session
+TODO: use reverse to replace the urt_for
 
+
+
+"""
 
 def timeline(request):
     pass
