@@ -14,10 +14,10 @@
 
 {% block body %}
 {#  <h2>{{ self.title() }}</h2>#}
-  {% if g.user %}
+  {% if request.session.get('user_id') %}
     {% if request.endpoint == 'user_timeline' %}
       <div class="followstatus">
-      {% if g.user.user_id == profile_user.user_id %}
+      {% if same_user %}
         This is you!
       {% elif followed %}
         You are currently following this user.

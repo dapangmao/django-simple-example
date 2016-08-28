@@ -1,9 +1,8 @@
 from hashlib import md5
-from werkzeug import check_password_hash, generate_password_hash
-from django.shortcuts import render, get_object_or_404, reverse, redirect
+# from werkzeug import check_password_hash, generate_password_hash
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import User, Follower, Message
-import time
 from datetime import datetime
 # Create your views here.
 
@@ -13,66 +12,81 @@ def gravatar_url(email, size=80):
     return 'http://www.gravatar.com/avatar/%s?d=identicon&s=%d' % \
         (md5(email.strip().lower().encode('utf-8')).hexdigest(), size)
 
-def format_datetime(timestamp):
+def format_datetime(datetime):
     """Format a timestamp for display."""
-    return datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d @ %H:%M')
+    return datetime.strftime('%Y-%m-%d @ %H:%M')
 
 
 
 def timeline(request):
-    if not request.session['user_id']:
+    try:
+        current_user_id = request.session['user_id']
+    except KeyError:
         return redirect('public_timeline')
-    user_id = request.session['user_id']
-    following_ids = Follower.objects.filter(who=user_id).values_list('whom', flat=True)
-    all_ids = following_ids + [user_id]
-    posts = Message.objects.filter(author__in=all_ids).order_by('-pub_date')[:20].select_related('user__username')
+    current_user = User.objects.get(pk=current_user_id)
+    following_ids = current_user.follower_set.values_list('whom', flat=True)
+    all_ids = following_ids + [current_user_id]
+    posts = Message.objects.filter(author_id__in=all_ids).order_by('-pub_date')[:20]
     return render(request, 'timeline.html', {'posts': posts})
 
 
 def public_timeline(request):
-    latest_posts = Message.objects.order_by('-pub_date')[:20].select_related('user__username')
-    return render(request, 'timeline.html', {'latest_posts': latest_posts})
+    latest_posts = Message.objects.order_by('-pub_date')[:20]
+    return render(request, 'timeline.html', {'posts': latest_posts})
 
 
 
 def user_timeline(request, username):
-    profile_user = get_object_or_404(User, username=username)
+    try:
+        profile_user = User.objects.get(username=username)
+    except profile_user.DoesNotExist:
+        return HttpResponse('This user does not exist', status=401)
+    posts = profile_user.message_set.order_by('-pub_date')[:20]
+    current_user_id = request.session.get('user_id')
     is_followed = False
-    if request.session['user_id']:
-        is_followed = Follower.filter(who=request.session['user_id'], whom=profile_user[0].pk).exists()
-    posts = Message.objects.filter(author=profile_user.pk).order_by('-pub_date')[:20]
+    if current_user_id and User.objects.get(pk=current_user_id).follower_set.filter(whom=profile_user.pk).exists():
+        is_followed = True
+    is_same_user = False
+    if current_user_id and profile_user.pk == current_user_id:
+        is_same_user = True
     # change the messages both here and the templates to posts
-    return render(request, 'timeline.html', {'posts': posts, 'profile_user': profile_user, 'followed': is_followed})
+    return render(request, 'timeline.html', {'posts': posts, 'profile_user': profile_user, 'followed': is_followed,
+                                             'same_user': is_same_user})
 
 
 def follow_user(request, username):
-    if not request.session['user_id']:
+    try:
+        current_user_id = request.session['user_id']
+    except KeyError:
         return HttpResponse('Unauthorized', status=401)
-    whom_queryset = User.objects.filter(username=username)
-    if not whom_queryset.exists():
-        return HttpResponse('No such a user', status=404)
-    current = Follower(who=request.session['user_id'], whom=whom_queryset[0].pk)
-    current.save()
+    try:
+        whom_pk = User.objects.get(username=username)
+    except whom_pk.DoesNotExist:
+        return HttpResponse('This user does not exist', status=404)
+    User.objects.get(pk=current_user_id).follower_set.create(whom=whom_pk)
     return redirect('user_timeline', username=username) # http://stackoverflow.com/questions/13328810/django-redirect-to-view
 
 
 def unfollow_user(request, username):
-    if not request.session['user_id']:
+    try:
+        current_user_id = request.session['user_id']
+    except KeyError:
         return HttpResponse('Unauthorized', status=401)
-    whom_queryset = User.objects.filter(username=username)
-    if not whom_queryset.exists():
-        return HttpResponse('No such a user', status=404)
-    current = Follower.filter(who=request.session['user_id'], whom=whom_queryset[0].pk)
-    current.delete()
+    try:
+        whom_pk = User.objects.get(username=username)
+    except whom_pk.DoesNotExist:
+        return HttpResponse('This user does not exist', status=404)
+    User.objects.get(pk=current_user_id).follower_set.filter(whom=whom_pk).delete()
     return redirect('user_timeline', username=username)
 
 
 def add_message(request):
-    if not request.session['user_id']:
+    if request.session.get('user_id') is None:
         return HttpResponse('Unauthorized', status=401)
     if request.POST.get('text'):
-        current = Message(author=request.session['user_id'], text=request.POST.get('text'), pub_date=time.time())
-        current.save()
+        current_user = User.objects.get(username=request.session['user_id'])
+        current_user.message_set.create(author=request.session['user_id'], text=request.POST.get('text'),
+                                        pub_date=datetime.utcnow())
     return redirect('timeline')
 
 
