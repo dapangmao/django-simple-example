@@ -94,13 +94,13 @@ div.page div.followstatus {
     font-size: 13px;
 }
 
-div.page ul.messages {
+div.page ul.posts {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-div.page ul.messages li {
+div.page ul.posts li {
     margin: 10px 0;
     padding: 5px;
     background: #F0FAF9;
@@ -110,16 +110,16 @@ div.page ul.messages li {
     min-height: 48px;
 }
 
-div.page ul.messages p {
+div.page ul.posts p {
     margin: 0;
 }
 
-div.page ul.messages li img {
+div.page ul.posts li img {
     float: left;
     padding: 0 10px 0 0;
 }
 
-div.page ul.messages li small {
+div.page ul.posts li small {
     font-size: 0.9em;
     color: #888;
 }
