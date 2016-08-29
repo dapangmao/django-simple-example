@@ -1,53 +1,39 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% load app_filters %} {% block body %}
+<h2>
+        {% if request.resolver_match.url_name == 'public_timeline' %}
+            Public Timeline
+        {% elif request.resolver_match.url_name == 'user_timeline' %}
+            {{ profile_user.username }}'s Timeline
+        {% else %}
+            My Timeline
+        {% endif %}
+   </h2> {% if 'user_id' in request.session %} {% if request.resolver_match.url_name == 'user_timeline' %}
+<div class="followstatus">
+    {% if same_user %} This is you! {% elif followed %} You are currently following this user.
+    <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>. {% else %} You are not yet following this user.
+    <a class="follow" href="{%  url 'follow_user' profile_user.username  %}">Follow user</a>. {% endif %}
+</div>
 
-{#<!--{% url 'polls:detail' question.id %}-->#}
+{% elif request.resolver_match.url_name == 'timeline' %}
+<div class="twitbox">
+    <h3>What's on your mind ?</h3>
+    <form action="{% url 'add_message' %}" method="post">
+        {% csrf_token %}
+        <p>
+            <input type="text" name="text" size="60">
+            <input type="submit" value="Share">
+    </form>
+</div>
+{% endif %} {% endif %}
 
-{% block title %}
-  {% if request.endpoint == 'public_timeline' %}
-    Public Timeline
-  {% elif request.endpoint == 'user_timeline' %}
-    {{ profile_user.username }}'s Timeline
-  {% else %}
-    My Timeline
-  {% endif %}
-{% endblock %}
-
-{% block body %}
-{#  <h2>{{ self.title() }}</h2>#}
-  {% if request.session.get('user_id') %}
-    {% if request.endpoint == 'user_timeline' %}
-      <div class="followstatus">
-      {% if same_user %}
-        This is you!
-      {% elif followed %}
-        You are currently following this user.
-        <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>.
-      {% else %}
-        You are not yet following this user.
-        <a class="follow" href="{%  url 'follow_user' profile_user.username  %}">Follow user</a>.
-      {% endif %}
-      </div>
-
-    {% elif request.endpoint == 'timeline' %}
-      <div class="twitbox">
-        <h3>What's on your mind {{ g.user.username }}?</h3>
-        <form action="{% url 'add_post' %}" method="post">
-          <p><input type="text" name="text" size="60"><!--
-          --><input type="submit" value="Share">
-        </form>
-      </div>
-    {% endif %}
-
-  {% endif %}
-
-  <ul class="posts">
-  {% for post in posts %}
-    <li><img src="{{ post.email|gravatar }}"><p>
-      <strong><a href="{%   url 'user_timeline' post.username %}">{{ post.username }}</a></strong>
-      {{ post.text }}
-      <small>&mdash; {{ post.pub_date|datetimeformat }}</small></li>
-  {% empty %}
+<ul class="posts">
+    {% for post in posts %}
+    <li><img src="{{ post.author.email|gravatar }}">
+        <p>
+            <strong><a href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong> {{ post.text }}
+            <small>&mdash; {{ post.pub_date|datetimeformat }}</small></li>
+    {% empty %}
     <li><em>There's no post so far.</em> </li>
-  {% endfor %}
-  </ul>
+    {% endfor %}
+</ul>
 {% endblock %}

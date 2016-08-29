@@ -1,14 +1,16 @@
 from django.conf.urls import url
 from . import views
 
-# TODO: django's re for url routing
 
 app_name = 'blog'
 urlpatterns = [
     url(r'^$', views.timeline, name='timeline'),
-    url(r'^public$', views.public_timeline, name='public_timeline'),
-    # # ex: /polls/5/results/
-    url(r'^(?P<username>)/$', views.user_timeline, name='user_timeline'),
-    # # ex: /polls/5/vote/
-    # url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
+    url(r'^public/', views.public_timeline, name='public_timeline'),
+    url(r'^(?P<username>\w+)/unfollow/', views.unfollow_user, name='unfollow_user'),
+    url(r'^(?P<username>\w+)/follow/', views.follow_user, name='follow_user'),
+    url(r'^add_message/$', views.add_message, name='add_message'),
+    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^(?P<username>\w+)/', views.user_timeline, name='user_timeline'),
 ]

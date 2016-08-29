@@ -1,21 +1,10 @@
-from hashlib import md5
 # from werkzeug import check_password_hash, generate_password_hash
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import User, Follower, Message
 from datetime import datetime
-# Create your views here.
-
-
-def gravatar_url(email, size=80):
-    """Return the gravatar image for the given email address."""
-    return 'http://www.gravatar.com/avatar/%s?d=identicon&s=%d' % \
-        (md5(email.strip().lower().encode('utf-8')).hexdigest(), size)
-
-def format_datetime(datetime):
-    """Format a timestamp for display."""
-    return datetime.strftime('%Y-%m-%d @ %H:%M')
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 
 
 def timeline(request):
@@ -25,7 +14,7 @@ def timeline(request):
         return redirect('public_timeline')
     current_user = User.objects.get(pk=current_user_id)
     following_ids = current_user.follower_set.values_list('whom', flat=True)
-    all_ids = following_ids + [current_user_id]
+    all_ids = list(following_ids) + [current_user_id]
     posts = Message.objects.filter(author_id__in=all_ids).order_by('-pub_date')[:20]
     return render(request, 'timeline.html', {'posts': posts})
 
@@ -35,12 +24,11 @@ def public_timeline(request):
     return render(request, 'timeline.html', {'posts': latest_posts})
 
 
-
 def user_timeline(request, username):
     try:
         profile_user = User.objects.get(username=username)
-    except profile_user.DoesNotExist:
-        return HttpResponse('This user does not exist', status=401)
+    except ObjectDoesNotExist:
+        return HttpResponse('This user does not ddfdfexist', status=401)
     posts = profile_user.message_set.order_by('-pub_date')[:20]
     current_user_id = request.session.get('user_id')
     is_followed = False
@@ -60,11 +48,11 @@ def follow_user(request, username):
     except KeyError:
         return HttpResponse('Unauthorized', status=401)
     try:
-        whom_pk = User.objects.get(username=username)
-    except whom_pk.DoesNotExist:
+        whom_pk = User.objects.get(username=username).pk
+    except ObjectDoesNotExist:
         return HttpResponse('This user does not exist', status=404)
     User.objects.get(pk=current_user_id).follower_set.create(whom=whom_pk)
-    return redirect('user_timeline', username=username) # http://stackoverflow.com/questions/13328810/django-redirect-to-view
+    return redirect('user_timeline', username=username)
 
 
 def unfollow_user(request, username):
@@ -73,18 +61,18 @@ def unfollow_user(request, username):
     except KeyError:
         return HttpResponse('Unauthorized', status=401)
     try:
-        whom_pk = User.objects.get(username=username)
-    except whom_pk.DoesNotExist:
+        whom_pk = User.objects.get(username=username).pk
+    except ObjectDoesNotExist:
         return HttpResponse('This user does not exist', status=404)
-    User.objects.get(pk=current_user_id).follower_set.filter(whom=whom_pk).delete()
+    Follower.objects.filter(who_id=current_user_id, whom=whom_pk).delete()
     return redirect('user_timeline', username=username)
 
 
 def add_message(request):
-    if request.session.get('user_id') is None:
+    if 'user_id' not in request.session:
         return HttpResponse('Unauthorized', status=401)
     if request.POST.get('text'):
-        current_user = User.objects.get(username=request.session['user_id'])
+        current_user = User.objects.get(pk=request.session['user_id'])
         current_user.message_set.create(author=request.session['user_id'], text=request.POST.get('text'),
                                         pub_date=datetime.utcnow())
     return redirect('timeline')
@@ -92,27 +80,29 @@ def add_message(request):
 
 def login(request):
     """Logs the user in."""
-    if request.session['user_id']:
+    if 'user_id' in request.session:
         return redirect('timeline')
     error = None
     if request.method == 'POST':
         current_username = request.POST.get('username')
-        current_password = request.POST.get('possword')
-        user = User.objects.filter(username=current_username)[0]
-        if not user.exists():
-            error = 'Invalid username'
-        elif not check_password_hash(user.pw_hash, current_password):
-            error = 'Invalid password'
+        current_password = request.POST.get('password')
+        try:
+            user = User.objects.get(username=current_username)
+        except ObjectDoesNotExist:
+            error = 'Not a valid user'
         else:
-            # flash('You were logged in')
-            request.session['user_id'] = user.pk
-            return redirect('timeline')
+            if user.pw_hash != current_password:
+                error = 'Invalid password'
+            else:
+                messages.success(request, 'You were logged in')
+                request.session['user_id'] = user.pk
+                request.session['username'] = user.username
+                return redirect('timeline')
     return render(request, 'login.html', {'error': error})
 
 
-
 def register(request):
-    if request.session['user_id']:
+    if 'user_id' in request.session:
         return redirect('timeline')
     error = None
     if request.method == 'POST':
@@ -132,17 +122,18 @@ def register(request):
             error = 'The username is already taken'
         else:
             current_user = User(username=current_username, email=current_email,
-                                pw_hash=generate_password_hash(current_password))
+                                pw_hash=current_password)
             current_user.save()
-            # flash('You were successfully registered and can login now')
+            messages.success(request, 'You were successfully registered and can login now')
             return redirect('login')
     return render(request, 'register.html', {'error': error})
 
 
 
 def logout(request):
-    # flash('You were logged out')
     request.session.pop('user_id')
+    request.session.pop('username')
+    messages.success(request, 'You were logger out')
     return redirect('public_timeline')
 
 
