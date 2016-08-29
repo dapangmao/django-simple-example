@@ -3,7 +3,6 @@
 <div class="error"><strong>Error:</strong> {{ error }}</div>{% endif %}
 <form action="" method="post">
     {% csrf_token %}
-
     <dl>
         <dt>Username:
       <dd><input type="text" name="username" size="30" value="{{ request.form.username }}">

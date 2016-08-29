@@ -7,9 +7,11 @@ from django.contrib import messages
 from .models import User, Follower, Message
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+# TODO: separate form
+# TODO: enhance admin
+# TODO: explore absolute redirect
 
-
-def common_timeline(request, posts):
+def base_timeline(request, posts):
     paginator = Paginator(posts, 5) # Show 25 contacts per page
     page = request.GET.get('page')
     try:
@@ -30,12 +32,12 @@ def timeline(request):
     following_ids = current_user.follower_set.values_list('whom', flat=True)
     all_ids = list(following_ids) + [current_user_id]
     posts = Message.objects.filter(author_id__in=all_ids).order_by('-pub_date')
-    return common_timeline(request, posts)
+    return base_timeline(request, posts)
 
 
 def public_timeline(request):
     latest_posts = Message.objects.order_by('-pub_date')
-    return common_timeline(request, latest_posts)
+    return base_timeline(request, latest_posts)
 
 
 def user_timeline(request, username):
