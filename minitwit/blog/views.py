@@ -1,4 +1,4 @@
-# from werkzeug import check_password_hash, generate_password_hash
+from werkzeug import check_password_hash, generate_password_hash
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import User, Follower, Message
@@ -91,7 +91,7 @@ def login(request):
         except ObjectDoesNotExist:
             error = 'Not a valid user'
         else:
-            if user.pw_hash != current_password:
+            if not check_password_hash(user.pw_hash, current_password):
                 error = 'Invalid password'
             else:
                 messages.success(request, 'You were logged in')
@@ -122,12 +122,11 @@ def register(request):
             error = 'The username is already taken'
         else:
             current_user = User(username=current_username, email=current_email,
-                                pw_hash=current_password)
+                                pw_hash=generate_password_hash(current_password))
             current_user.save()
             messages.success(request, 'You were successfully registered and can login now')
             return redirect('login')
     return render(request, 'register.html', {'error': error})
-
 
 
 def logout(request):
