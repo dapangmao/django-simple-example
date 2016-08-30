@@ -1,13 +1,15 @@
-from werkzeug import check_password_hash, generate_password_hash
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
-from .models import User, Follower, Message
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-# TODO: separate form
+from .models import User, Follower, Message
+from .forms import UserForm
+from werkzeug import check_password_hash
+
+
 # TODO: enhance admin
 # TODO: explore absolute redirect
 
@@ -119,29 +121,15 @@ def login(request):
 def register(request):
     if 'user_id' in request.session:
         return redirect('timeline')
-    error = None
     if request.method == 'POST':
-        current_username = request.POST.get('username')
-        current_password = request.POST.get('password')
-        current_password2 = request.POST.get('password2')
-        current_email = request.POST.get('email')
-        if current_username is None:
-            error = 'You have to enter a username'
-        elif current_email is None or '@' not in current_email:
-            error = 'You have to enter a valid email address'
-        elif current_password is None:
-            error = 'You have to enter a password'
-        elif current_password != current_password2:
-            error = 'The two passwords do not match'
-        elif User.objects.filter(username=current_username).exists():
-            error = 'The username is already taken'
-        else:
-            current_user = User(username=current_username, email=current_email,
-                                pw_hash=generate_password_hash(current_password))
-            current_user.save()
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
             messages.success(request, 'You were successfully registered and can login now')
             return redirect('login')
-    return render(request, 'register.html', {'error': error})
+    else:
+        form = UserForm()
+    return render(request, 'register.html', {'form': form})
 
 
 def logout(request):
