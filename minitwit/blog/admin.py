@@ -4,15 +4,12 @@ from .models import User, Follower, Message
 
 class MessageInline(admin.StackedInline):
     model = Message
-    extra = 3
+    extra = 3  # it will be 6 entries each user
 
 
 class UserAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None,               {'fields': ['username']}),
-        ('Date information', {'fields': ['email'], 'classes': ['collapse']}),
-    ]
+    fieldsets = [('User', {'fields': ['username']})]
     inlines = [MessageInline]
-    # list_display = ('text', 'pub_date') # replace def __str__()
+    list_display = ('username', 'email') # replace def __str__()
 
 admin.site.register(User, UserAdmin)
