@@ -13,8 +13,8 @@ from werkzeug import check_password_hash
 # TODO: enhance admin
 # TODO: explore absolute redirect
 
-def base_timeline(request, posts):
-    paginator = Paginator(posts, 5) # Show 25 contacts per page
+def get_paged_posts(request, posts, n=5):
+    paginator = Paginator(posts, n) # Show 25 contacts per page
     page = request.GET.get('page')
     try:
         paged_posts = paginator.page(page)
@@ -22,7 +22,7 @@ def base_timeline(request, posts):
         paged_posts = paginator.page(1)
     except EmptyPage:
         paged_posts = paginator.page(paginator.num_pages)
-    return render(request, 'timeline.html', {'posts': paged_posts})
+    return paged_posts
 
 
 def timeline(request):
@@ -34,12 +34,14 @@ def timeline(request):
     following_ids = current_user.follower_set.values_list('whom', flat=True)
     all_ids = list(following_ids) + [current_user_id]
     posts = Message.objects.filter(author_id__in=all_ids).order_by('-pub_date')
-    return base_timeline(request, posts)
+    paged_posts = get_paged_posts(request, posts)
+    return render(request, 'timeline.html', {'posts': paged_posts})
 
 
 def public_timeline(request):
     latest_posts = Message.objects.order_by('-pub_date')
-    return base_timeline(request, latest_posts)
+    paged_posts = get_paged_posts(request, latest_posts)
+    return render(request, 'timeline.html', {'posts': paged_posts})
 
 
 def user_timeline(request, username):
@@ -47,7 +49,7 @@ def user_timeline(request, username):
         profile_user = User.objects.get(username=username)
     except ObjectDoesNotExist:
         return HttpResponse('This user does not exist', status=401)
-    posts = profile_user.message_set.order_by('-pub_date')[:20]
+    profile_user_posts = profile_user.message_set.order_by('-pub_date')
     current_user_id = request.session.get('user_id')
     is_followed = False
     if current_user_id and User.objects.get(pk=current_user_id).follower_set.filter(whom=profile_user.pk).exists():
@@ -55,7 +57,8 @@ def user_timeline(request, username):
     is_same_user = False
     if current_user_id and profile_user.pk == current_user_id:
         is_same_user = True
-    return render(request, 'timeline.html', {'posts': posts, 'profile_user': profile_user, 'followed': is_followed,
+    paged_posts = get_paged_posts(request, profile_user_posts)
+    return render(request, 'timeline.html', {'posts': paged_posts, 'profile_user': profile_user, 'followed': is_followed,
                                              'same_user': is_same_user})
 
 
@@ -137,10 +140,3 @@ def logout(request):
     request.session.pop('username')
     messages.success(request, 'You were logger out')
     return redirect('public_timeline')
-
-
-
-
-
-
-
