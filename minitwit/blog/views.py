@@ -10,11 +10,8 @@ from .forms import UserForm
 from werkzeug import check_password_hash
 
 
-# TODO: enhance admin
-# TODO: explore absolute redirect
-
 def get_paged_posts(request, posts, n=5):
-    paginator = Paginator(posts, n) # Show 25 contacts per page
+    paginator = Paginator(posts, n)
     page = request.GET.get('page')
     try:
         paged_posts = paginator.page(page)
