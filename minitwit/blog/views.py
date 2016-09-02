@@ -46,13 +46,13 @@ def user_timeline(request, username):
     except ObjectDoesNotExist:
         return Http404('this user does not exist')
     profile_user_posts = profile_user.message_set.order_by('-pub_date')
-    current_user_id = request.user.pk
-    is_followed = False
-    if current_user_id and request.user.follower_set.filter(whom=profile_user.pk).exists():
-        is_followed = True
-    is_same_user = False
-    if current_user_id and profile_user.pk == current_user_id:
-        is_same_user = True
+    is_followed, is_same_user = False, False
+    if request.user.is_authenticated():
+        current_user_id = request.user.pk
+        if request.user.follower_set.filter(whom=profile_user.pk).exists():
+            is_followed = True
+        if profile_user.pk == current_user_id:
+            is_same_user = True
     paged_posts = get_paged_posts(request, profile_user_posts)
     return render(request, 'timeline.html', {'posts': paged_posts, 'profile_user': profile_user, 'followed': is_followed,
                                              'same_user': is_same_user})
