@@ -9,7 +9,7 @@
         {% endif %}
 </h2>
 
-{% if 'user_id' in request.session %} {% if request.resolver_match.url_name == 'user_timeline' %}
+{% if user.is_authenticated %} {% if request.resolver_match.url_name == 'user_timeline' %}
 <div class="followstatus">
     {% if same_user %} This is you! {% elif followed %} You are currently following this user.
     <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>. {% else %} You are not yet following this user.

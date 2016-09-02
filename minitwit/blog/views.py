@@ -4,10 +4,12 @@ from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
-from .models import User, Follower, Message
-from .forms import UserForm
-from werkzeug import check_password_hash
+from .models import Follower, Message
+from .forms import UserForm, LoginForm
+from django.contrib.auth import authenticate, login, logout
 
 
 def get_paged_posts(request, posts, n=5):
@@ -23,13 +25,10 @@ def get_paged_posts(request, posts, n=5):
 
 
 def timeline(request):
-    try:
-        current_user_id = request.session['user_id']
-    except KeyError:
+    if not request.user.is_authenticated():
         return redirect('public_timeline')
-    current_user = User.objects.get(pk=current_user_id)
-    following_ids = current_user.follower_set.values_list('whom', flat=True)
-    all_ids = list(following_ids) + [current_user_id]
+    following_ids = request.user.follower_set.values_list('whom', flat=True)
+    all_ids = list(following_ids) + [request.user.pk]
     posts = Message.objects.filter(author_id__in=all_ids).order_by('-pub_date')
     paged_posts = get_paged_posts(request, posts)
     return render(request, 'timeline.html', {'posts': paged_posts})
@@ -44,12 +43,12 @@ def public_timeline(request):
 def user_timeline(request, username):
     try:
         profile_user = User.objects.get(username=username)
-    except ObjectDoesNotExist:
-        return HttpResponse('This user does not exist', status=401)
+    except objectdoesnotexist:
+        return httpresponse('this user does not exist', status=401)
     profile_user_posts = profile_user.message_set.order_by('-pub_date')
-    current_user_id = request.session.get('user_id')
+    current_user_id = request.user.pk
     is_followed = False
-    if current_user_id and User.objects.get(pk=current_user_id).follower_set.filter(whom=profile_user.pk).exists():
+    if current_user_id and request.user.follower_set.filter(whom=profile_user.pk).exists():
         is_followed = True
     is_same_user = False
     if current_user_id and profile_user.pk == current_user_id:
@@ -59,81 +58,61 @@ def user_timeline(request, username):
                                              'same_user': is_same_user})
 
 
+@login_required
 def follow_user(request, username):
     try:
-        current_user_id = request.session['user_id']
-    except KeyError:
-        return HttpResponse('Unauthorized', status=401)
-    try:
         whom_pk = User.objects.get(username=username).pk
-    except ObjectDoesNotExist:
-        return HttpResponse('This user does not exist', status=404)
-    User.objects.get(pk=current_user_id).follower_set.create(whom=whom_pk)
+    except objectdoesnotexist:
+        return httpresponse('this user does not exist', status=404)
+    User.objects.get(pk=request.user.pk).follower_set.create(whom=whom_pk)
     return redirect('user_timeline', username=username)
 
 
+@login_required
 def unfollow_user(request, username):
     try:
-        current_user_id = request.session['user_id']
-    except KeyError:
-        return HttpResponse('Unauthorized', status=401)
-    try:
         whom_pk = User.objects.get(username=username).pk
-    except ObjectDoesNotExist:
-        return HttpResponse('This user does not exist', status=404)
-    Follower.objects.filter(who_id=current_user_id, whom=whom_pk).delete()
+    except objectdoesnotexist:
+        return httpresponse('this user does not exist', status=404)
+    Follower.objects.filter(who_id=request.user.pk, whom=whom_pk).delete()
     return redirect('user_timeline', username=username)
 
 
+@login_required
 def add_message(request):
-    if 'user_id' not in request.session:
-        return HttpResponse('Unauthorized', status=401)
     if request.POST.get('text'):
-        current_user = User.objects.get(pk=request.session['user_id'])
-        current_user.message_set.create(author=request.session['user_id'], text=request.POST.get('text'),
+        request.user.message_set.create(text=request.POST.get('text'),
                                         pub_date=datetime.utcnow())
     return redirect('timeline')
 
 
-def login(request):
-    """Logs the user in."""
-    if 'user_id' in request.session:
+def login_view(request):
+    if request.user.is_authenticated():
         return redirect('timeline')
-    error = None
-    if request.method == 'POST':
-        current_username = request.POST.get('username')
-        current_password = request.POST.get('password')
-        try:
-            user = User.objects.get(username=current_username)
-        except ObjectDoesNotExist:
-            error = 'Not a valid user'
-        else:
-            if not check_password_hash(user.pw_hash, current_password):
-                error = 'Invalid password'
-            else:
-                messages.success(request, 'You were logged in')
-                request.session['user_id'] = user.pk
-                request.session['username'] = user.username
-                return redirect('timeline')
-    return render(request, 'login.html', {'error': error})
+    form = LoginForm(request.POST or None)
+    if request.POST and form.is_valid():
+        user = form.login(request)
+        if user:
+            login(request, user)
+            return redirect('timeline')
+    return render(request, 'login.html', {'form': form})
 
 
 def register(request):
-    if 'user_id' in request.session:
+    if request.user.is_authenticated():
         return redirect('timeline')
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'You were successfully registered and can login now')
-            return redirect('login')
+            return redirect('login_view')
     else:
         form = UserForm()
     return render(request, 'register.html', {'form': form})
 
 
-def logout(request):
-    request.session.pop('user_id')
-    request.session.pop('username')
+def logout_view(request):
+    logout(request)
     messages.success(request, 'You were logger out')
     return redirect('public_timeline')
