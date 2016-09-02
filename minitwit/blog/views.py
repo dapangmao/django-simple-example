@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import Http404
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout
 
 from .models import Follower, Message
 from .forms import UserForm, LoginForm
-from django.contrib.auth import authenticate, login, logout
 
 
 def get_paged_posts(request, posts, n=5):
@@ -43,8 +43,8 @@ def public_timeline(request):
 def user_timeline(request, username):
     try:
         profile_user = User.objects.get(username=username)
-    except objectdoesnotexist:
-        return httpresponse('this user does not exist', status=401)
+    except ObjectDoesNotExist:
+        return Http404('this user does not exist')
     profile_user_posts = profile_user.message_set.order_by('-pub_date')
     current_user_id = request.user.pk
     is_followed = False
@@ -62,8 +62,8 @@ def user_timeline(request, username):
 def follow_user(request, username):
     try:
         whom_pk = User.objects.get(username=username).pk
-    except objectdoesnotexist:
-        return httpresponse('this user does not exist', status=404)
+    except ObjectDoesNotExist:
+        return Http404('this user does not exist')
     User.objects.get(pk=request.user.pk).follower_set.create(whom=whom_pk)
     return redirect('user_timeline', username=username)
 
@@ -72,8 +72,8 @@ def follow_user(request, username):
 def unfollow_user(request, username):
     try:
         whom_pk = User.objects.get(username=username).pk
-    except objectdoesnotexist:
-        return httpresponse('this user does not exist', status=404)
+    except ObjectDoesNotExist:
+        return Http404('this user does not exist')
     Follower.objects.filter(who_id=request.user.pk, whom=whom_pk).delete()
     return redirect('user_timeline', username=username)
 
