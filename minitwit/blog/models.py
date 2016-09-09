@@ -10,4 +10,4 @@ class Follower(models.Model):
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=3000)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField(auto_now_add=True)

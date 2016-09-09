@@ -1,4 +1,7 @@
-{% extends "layout.html" %} {% load app_filters %} {% block body %}
+{% extends "layout.html" %}
+{% load app_filters %}
+{% block body %}
+
 <h2>
         {% if request.resolver_match.url_name == 'public_timeline' %}
             Public Timeline
@@ -9,35 +12,38 @@
         {% endif %}
 </h2>
 
-{% if user.is_authenticated %} {% if request.resolver_match.url_name == 'user_timeline' %}
-<div class="followstatus">
-    {% if same_user %} This is you! {% elif followed %} You are currently following this user.
-    <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>. {% else %} You are not yet following this user.
-    <a class="follow" href="{%  url 'follow_user' profile_user.username  %}">Follow user</a>. {% endif %}
-</div>
+{% if user.is_authenticated %}
+    {% if request.resolver_match.url_name == 'user_timeline' %}
+    <div class="followstatus">
+        {% if same_user %} This is you! {% elif followed %} You are currently following this user.
+        <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>. {% else %} You are not yet following this user.
+        <a class="follow" href="{%  url 'follow_user' profile_user.username  %}">Follow user</a>. {% endif %}
+    </div>
 
-{% elif request.resolver_match.url_name == 'timeline' %}
-<div class="twitbox">
-    <h3>What's on your mind ?</h3>
-    <form action="{% url 'add_message' %}" method="post">
-        {% csrf_token %}
-        <p>
+    {% elif request.resolver_match.url_name == 'timeline' %}
+    <div class="twitbox">
+        <h3>What's on your mind ?</h3>
+        <form action="{% url 'add_message' %}" method="post">
+            {% csrf_token %}
+            <p>
             <input type="text" name="text" size="60">
             <input type="submit" value="Share">
-    </form>
-</div>
-{% endif %} {% endif %}
+        </form>
+    </div>
+    {% endif %}
+{% endif %}
 
 <ul class="posts">
-    {% for post in posts %}
+{% for post in posts %}
     <li><img src="{{ post.author.email|gravatar }}">
-        <p>
-            <strong><a href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong> {{ post.text }}
-            <small>&mdash; {{ post.pub_date|datetimeformat }}</small></li>
+    <p>
+        <strong><a href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong> {{ post.text }}
+        <small>&mdash; {{ post.pub_date|datetimeformat }}</small></li>
     {% empty %}
     <li><em>There's no post so far.</em> </li>
-    {% endfor %}
+{% endfor %}
 </ul>
+
 
 <div class="pagination">
     <span class="step-links">

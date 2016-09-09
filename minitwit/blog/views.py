@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
-from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -81,8 +80,7 @@ def unfollow_user(request, username):
 @login_required
 def add_message(request):
     if request.POST.get('text'):
-        request.user.message_set.create(text=request.POST.get('text'),
-                                        pub_date=datetime.utcnow())
+        request.user.message_set.create(text=request.POST.get('text'))
     return redirect('timeline')
 
 
