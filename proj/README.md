@@ -34,3 +34,6 @@ INSTALLED_APPS += ('djcelery',)
 # store schedule in the DB:
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 ```
+
+
+2. http://stackoverflow.com/questions/10194975/how-to-dynamically-add-remove-periodic-tasks-to-celery-celerybeat
