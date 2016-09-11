@@ -1,4 +1,6 @@
 from __future__ import absolute_import
+from datetime import timedelta
+
 # ^^^ The above is required if you want to import from the celery
 # library.  If you don't have this then `from celery.schedules import`
 # becomes `proj.celery.schedules` in Python 2.x since it allows
@@ -40,6 +42,8 @@ DATABASES = {
                            # Not used with sqlite3.
     }
 }
+
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -171,4 +175,14 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+
+
+CELERYBEAT_SCHEDULE = {
+    'add-every-10-seconds': {
+        'task': 'demoapp.tasks.add',
+        'schedule': timedelta(seconds=10),
+        'args': (16, 1644)
+    },
 }
