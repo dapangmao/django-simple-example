@@ -4,11 +4,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import etag
 import hashlib
 
-
 from .forms import ImageForm
 
-
-# Create your views here.
 
 def generate_etag(request, width, height):
     content = 'Placeholder: {0} x {1}'.format(width, height)
