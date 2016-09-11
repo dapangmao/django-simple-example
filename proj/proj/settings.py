@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 from datetime import timedelta
+import djcelery
+djcelery.setup_loader()
 
 # ^^^ The above is required if you want to import from the celery
 # library.  If you don't have this then `from celery.schedules import`
@@ -8,14 +10,14 @@ from datetime import timedelta
 
 # Celery settings
 
-BROKER_URL = 'redis://localhost:6379/0'
+BROKER_URL = 'redis://localhost:6379/1'
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
 
 
 # Django settings for proj project.
@@ -142,6 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'kombu.transport.django',
     'demoapp',
+    'djcelery'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -180,9 +183,11 @@ LOGGING = {
 
 
 CELERYBEAT_SCHEDULE = {
-    'add-every-10-seconds': {
-        'task': 'demoapp.tasks.add',
-        'schedule': timedelta(seconds=10),
-        'args': (16, 1644)
+    'count-word-30-seconds': {
+        'task': 'demoapp.tasks.count_words_at_url',
+        'schedule': timedelta(seconds=30),
+        # 'args': (,)
     },
 }
+
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
