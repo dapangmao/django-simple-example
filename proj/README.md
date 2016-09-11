@@ -3,3 +3,14 @@
 
 
 2. http://stackoverflow.com/questions/20116573/in-celery-3-1-making-django-periodic-task?rq=1
+3. http://stackoverflow.com/questions/10660202/how-do-i-set-a-backend-for-django-celery-i-set-celery-result-backend-but-it-is
+
+
+--- 
+
+## How to replicate:
+
+- Overall, there are three processes needed in Windows
+- 1. python manage.py celeryd -E -l info
+- 2. python manage.py celerycam
+- 3. celery beat -A proj -l info
