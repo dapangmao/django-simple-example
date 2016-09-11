@@ -16,7 +16,10 @@ OK
 
 
 - no worry about the seralization of the objects
+
+```
 In[3]: from django.core.cache import cache
 In[4]: cache.set('pig', {'df': 1})
 In[5]: cache.get('pig')
 Out[5]: {'df': 1}
+```
