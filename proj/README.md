@@ -4,7 +4,7 @@
 
 2. http://stackoverflow.com/questions/20116573/in-celery-3-1-making-django-periodic-task?rq=1
 3. http://stackoverflow.com/questions/10660202/how-do-i-set-a-backend-for-django-celery-i-set-celery-result-backend-but-it-is
-
+4. http://www.lexev.org/en/2014/django-celery-setup/
 
 --- 
 
