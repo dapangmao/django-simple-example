@@ -14,3 +14,4 @@
 - 1. python manage.py celeryd -E -l info
 - 2. python manage.py celerycam
 - 3. celery beat -A proj -l info
+- the result will be wriiten to djcelery_taskstate
