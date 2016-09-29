@@ -33,16 +33,29 @@
     {% endif %}
 {% endif %}
 
-<ul class="posts">
+
 {% for post in posts %}
-    <li><img src="{{ post.author.email|gravatar }}">
-    <p>
-        <strong><a href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong> {{ post.text }}
-        <small>&mdash; {{ post.pub_date|datetimeformat }}</small></li>
-    {% empty %}
-    <li><em>There's no post so far.</em> </li>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img src="{{ post.author.email|gravatar }}">
+                    <strong><a href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong>
+                </div>
+                <div class="panel-body">
+                    {{ post.text | safe }}
+                    <small>&mdash; {{ post.pub_date|datetimeformat }}</small>
+                </div>
+            </div>
+        </div>
+{#    {% empty %}#}
+{#     <div class="row">#}
+{#        <div class="col-lg-6 col-lg-offset-3">#}
+{#            <em>There's no post so far.</em>#}
+{#        </div>#}
+{#     </div>#}
+    </div>
 {% endfor %}
-</ul>
 
 
 <div class="pagination">
