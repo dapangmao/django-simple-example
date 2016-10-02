@@ -10,8 +10,8 @@
         {% else %}
             My Timeline
         {% endif %}
-</h2>
 
+</h2>
 {% if user.is_authenticated %}
     {% if request.resolver_match.url_name == 'user_timeline' %}
     <div class="followstatus">
