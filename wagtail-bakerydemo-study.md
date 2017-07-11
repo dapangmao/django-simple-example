@@ -227,4 +227,111 @@ class BlogIndexPage(RoutablePageMixin, Page):
         return tags
 ```
 
+#### Two templates
+- blog_index_page.html
+```html
+{% extends "base.html" %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block content %}
+    {% include "base/include/header-index.html" %}
+
+    <div class="container">
+        {% if tag %}
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Viewing all blog posts by <span class="outline">{{ tag }}</span></p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if page.get_child_tags %}
+            <ul class="blog-tags tags list-inline">
+                {% for tag in page.get_child_tags %}
+                    <li><a href="{{ tag.url }}">{{ tag }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="row row-eq-height blog-list">
+            {% if posts %}
+                {% for blog in posts %}
+                    <li class="col-xs-12 col-sm-6 col-md-3 blog-list-item">
+                        <a href="{% pageurl blog %}">
+                            <div class="image">
+                                {% image blog.image fill-850x450-c50 as image %}
+                                <img src="{{ image.url }}" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt }}" class="" />
+                            </div>
+                            <div class="text">
+                                <h2 class="blog-list-title">{{ blog.title }}</h2>
+                                <p>{{ blog.introduction|truncatewords:15 }}</p>
+                            </div>
+                            <div class="small footer">
+                                {% if blog.date_published %}
+                                    {{ blog.date_published }} by 
+                                {% endif %}
+                                {% for author in blog.authors %}
+                                    {{ author }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12">
+                    <p>Oh, snap. Looks like we were too busy baking to write any blog posts. Sorry.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+```
+
+- blog_page.html
+```html
+{% extends "base.html" %}
+{% load navigation_tags wagtailimages_tags %}
+
+{% block content %}
+
+    {% image self.image fill-1920x600 as hero_img %}
+        {% include "base/include/header-hero.html" %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% if page.introduction %}
+                    <p class="intro">{{ page.introduction }}</p>
+                {% endif %}
+
+                <div class="blog-meta">
+                    {% if page.authors %}
+                        <div class="blog-avatars">
+                            {% for author in page.authors %}
+                                <div class="author">{% image author.image fill-50x50-c100 class="blog-avatar" %}
+                                    {{ author.first_name }} {{ author.last_name }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if page.date_published %}
+                        <div class="blog-byline">
+                            {{ page.date_published }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {{ page.body }}
+
+                {% if page.get_tags %}
+                    Tagged with:<br />
+                    {% for tag in page.get_tags  %}
+                        <a href="{{ tag.url }}" class="btn btn-sm">{{ tag }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+```
 
