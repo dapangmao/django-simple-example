@@ -1,1 +1,0 @@
-{"virtualbox":{"/project":{"guestpath":"/project","hostpath":"C:/Users/me/django-simple-example/minitwit","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/me/django-simple-example/minitwit","disabled":false,"__vagrantfile":true}}}
