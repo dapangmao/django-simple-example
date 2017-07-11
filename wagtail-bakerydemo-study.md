@@ -1,6 +1,6 @@
 ## Goodness
 - minimal lines of Python
-- only work with models.py and its corresponding HTML templates
+- only need to work with models.py and its corresponding HTML templates
 
 ### Blog example
 
@@ -335,3 +335,16 @@ class BlogIndexPage(RoutablePageMixin, Page):
 {% endblock content %}
 ```
 
+- header-index.html
+```html
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ page.title }}</h1>
+            <p>{{ page.introduction }}</p>
+        </div>
+    </div>
+</div>
+```
