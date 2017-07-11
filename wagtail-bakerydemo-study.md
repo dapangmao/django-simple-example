@@ -7,7 +7,8 @@
 ### Blog example
 
 - the streamblock [BaseStreamBlock](https://github.com/wagtail/bakerydemo/blob/master/bakerydemo/base/blocks.py#L53)
-- the index page will be narrowed by the tag
+    ![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/streamblock.PNG?raw=true)
+- the index page will be narrowed by the tag 
 
 
 ```python
