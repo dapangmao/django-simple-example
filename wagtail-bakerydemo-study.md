@@ -1,6 +1,8 @@
 ## Goodness
 - minimal lines of Python
 - only need to work with models.py and its corresponding HTML templates
+- define the search scope
+- resize the images automatically
 
 ### Blog example
 
