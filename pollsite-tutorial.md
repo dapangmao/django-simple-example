@@ -51,10 +51,13 @@ class DetailView(View):
             })
         selected_choice.votes += 1
         selected_choice.save()
-        return self.get(request, question_id, True)```
+        return self.get(request, question_id, True)
+        
+```
 
 4. Router
-```
+
+```html
 from django.conf.urls import url
 from django.contrib import admin
 
@@ -69,6 +72,7 @@ urlpatterns = [
 ```
 
 5. Template layer
+
 ```html
 {% extends "base.html" %}
 
