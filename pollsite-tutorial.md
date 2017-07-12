@@ -33,25 +33,28 @@ def index(request):
 
 
 class DetailView(View):
+    template_name = 'detail.html'
+
     def get(self, request, question_id, is_result=False):
         try:
             res = Question.objects.get(pk=question_id)
         except Question.DoesNotExist:
             raise Http404("No such thing")
-        return render(request, 'detail.html', {'question': res, 'is_result': is_result})
+        return render(request, self.template_name, {'question': res, 'is_result': is_result})
 
     def post(self, request, question_id):
         question = get_object_or_404(Question, pk=question_id)
         try:
             selected_choice = question.choice_set.get(pk=request.POST['choice'])
         except (KeyError, Choice.DoesNotExist):
-            return render(request, 'detail.html', {
+            return render(request, self.template_name, {
                 'question': question,
                 'error_message': "You didn't select a choice.",
             })
         selected_choice.votes += 1
         selected_choice.save()
         return self.get(request, question_id, True)
+
         
 ```
 
