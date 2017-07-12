@@ -69,7 +69,7 @@ urlpatterns = [
 ```
 
 5. Template layer
-```
+```html
 {% extends "base.html" %}
 
 {% block content %}
