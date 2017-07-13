@@ -25,7 +25,7 @@ def get_paged_posts(request, posts, n=5):
 
 def timeline(request):
     if not request.user.is_authenticated():
-        return redirect('public_timeline')
+        return public_timeline(request)
     following_ids = request.user.follower_set.values_list('whom', flat=True)
     all_ids = list(following_ids) + [request.user.pk]
     posts = Message.objects.filter(author_id__in=all_ids).order_by('-pub_date')
