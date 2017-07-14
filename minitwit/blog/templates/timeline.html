@@ -15,10 +15,13 @@
     {% if user.is_authenticated %}
         {% if request.resolver_match.url_name == 'user_timeline' %}
             <div class="followstatus">
-                {% if same_user %} This is you! {% elif followed %} You are currently following this user.
+                {% if user == profile_user %} This is you!
+                {% elif followed %} You are currently following this user.
                     <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
-                    . {% else %} You are not yet following this user.
-                    <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>. {% endif %}
+                    .
+                {% else %} You are not yet following this user.
+                    <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
+                {% endif %}
             </div>
 
         {% elif request.resolver_match.url_name == 'timeline' %}
@@ -26,7 +29,7 @@
                 <div class="col-lg-6 col-lg-offset-3">
                     <div class="form-group">
                         <label>What's on your mind ?</label>
-                        <form action="{% url 'add_message' %}" method="post">
+                        <form action="{% url 'timeline' %}" method="post">
                             {% csrf_token %}
                             <p>
                                 <input type="text" name="text" size="60">
@@ -71,6 +74,7 @@
             <ul class="pagination pagination-centered">
                 {% if posts.has_previous %}
                     <li><a href="?page=1"><<</a></li>
+                    `
                     <li><a href="?page={{ posts.previous_page_number }}"><</a></li>
                 {% endif %}
 
