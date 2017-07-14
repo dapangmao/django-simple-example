@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.views import View
 
-from .models import Message
+from .models import Message, Follower
 from .forms import UserForm, LoginForm
 
 
@@ -58,16 +58,13 @@ def user_timeline(request, username):
 
 
 @login_required
-def follow_user(request, username):
+def toggle_following(request, username):
     followed = get_object_or_404(User, username=username)
-    request.user.follower_set.create(followed=followed)
-    return redirect('user_timeline', username=username)
-
-
-@login_required
-def unfollow_user(request, username):
-    followed = get_object_or_404(User, username=username)
-    request.user.follower_set.filter(followed=followed).delete()
+    relationship = Follower.objects.filter(follower=request.user, followed=followed)
+    if relationship.exists():
+        relationship.delete()
+    else:
+        request.user.follower_set.create(followed=followed)
     return redirect('user_timeline', username=username)
 
 
