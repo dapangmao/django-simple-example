@@ -130,29 +130,27 @@ def logout_view(request):
 {% load app_filters %}
 {% block body %}
 
-    <h2>
-        {% if request.resolver_match.url_name == 'public_timeline' %}
-            Public Timeline
-        {% elif request.resolver_match.url_name == 'user_timeline' %}
-            {{ profile_user.username }}'s Timeline
+    {% with request.resolver_match.url_name as url_name %}
+        {% if url_name == 'public_timeline' %}
+            <h2> Public Timeline </h2>
+        {% elif url_name == 'user_timeline' %}
+            <h2> {{ profile_user.username }}'s Timeline </h2>
+            {% if user.is_authenticated %}
+                <div class="followstatus">
+                    {% if user == profile_user %}
+                        This is you!
+                    {% elif followed %}
+                        You are currently following this user.
+                        <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
+                        .
+                    {% else %}
+                        You are not yet following this user.
+                        <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
+                    {% endif %}
+                </div>
+            {% endif %}
         {% else %}
-            My Timeline
-        {% endif %}
-
-    </h2>
-    {% if user.is_authenticated %}
-        {% if request.resolver_match.url_name == 'user_timeline' %}
-            <div class="followstatus">
-                {% if user == profile_user %} This is you!
-                {% elif followed %} You are currently following this user.
-                    <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
-                    .
-                {% else %} You are not yet following this user.
-                    <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
-                {% endif %}
-            </div>
-
-        {% elif request.resolver_match.url_name == 'timeline' %}
+            <h2>My Timeline </h2>
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
                     <div class="form-group">
@@ -167,8 +165,7 @@ def logout_view(request):
                 </div>
             </div>
         {% endif %}
-    {% endif %}
-
+    {% endwith %}
 
     {% if posts %}
         {% for post in posts %}
@@ -220,121 +217,5 @@ def logout_view(request):
 
 
 {% endblock %}
-```
 
-- Use the `timeline` template multiple times 
-    - the template can detect url by `request.resolver_match.url_name `
-    
-    
-```html
-{% extends "layout.html" %}
-{% load app_filters %}
-{% block body %}
-
-    <h2>
-        {% if request.resolver_match.url_name == 'public_timeline' %}
-            Public Timeline
-        {% elif request.resolver_match.url_name == 'user_timeline' %}
-            {{ profile_user.username }}'s Timeline
-        {% else %}
-            My Timeline
-        {% endif %}
-
-    </h2>
-    {% if user.is_authenticated %}
-        {% if request.resolver_match.url_name == 'user_timeline' %}
-            <div class="followstatus">
-                {% if user == profile_user %} This is you!
-                {% elif followed %} You are currently following this user.
-                    <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
-                    .
-                {% else %} You are not yet following this user.
-                    <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
-                {% endif %}
-            </div>
-
-        {% elif request.resolver_match.url_name == 'timeline' %}
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    <div class="form-group">
-                        <label>What's on your mind ?</label>
-                        <form action="{% url 'timeline' %}" method="post">
-                            {% csrf_token %}
-                            <p>
-                                <input type="text" name="text" size="60">
-                                <button type="submit" class="btn btn-default">Share</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    {% endif %}
-
-
-    {% if posts %}
-        {% for post in posts %}
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <img src="{{ post.author.email|gravatar }}">
-                            <strong><a
-                                    href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong>
-                        </div>
-                        <div class="panel-body">
-                            {{ post.text | safe }}
-                            <small>&mdash; {{ post.pub_date|datetimeformat }}</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <div class="row">
-            <div class="col-lg-6 col-lg-offset-3">
-                There is no valid post yet.
-            </div>
-        </div>
-    {% endif %}
-
-
-    <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-            <ul class="pagination pagination-centered">
-                {% if posts.has_previous %}
-                    <li><a href="?page=1"><<</a></li>
-                    `
-                    <li><a href="?page={{ posts.previous_page_number }}"><</a></li>
-                {% endif %}
-
-                {% for i in posts.paginator.page_range %}
-                    <li {% if posts.number == i %} class="active" {% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
-                {% endfor %}
-
-                {% if posts.has_next %}
-                    <li><a href="?page={{ posts.next_page_number }}">></a></li>
-                    <li><a href="?page={{ posts.paginator.num_pages }}">>></a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-
-
-{% endblock %}
-```
-
-- URLs
-
-```python
-urlpatterns = [
-    url(r'^$', views.MyTimeline.as_view(), name='timeline'),
-    url(r'public/', views.public_timeline, name='public_timeline'),
-    url(r'^user/(?P<username>\w+)/unfollow/', views.unfollow_user, name='unfollow_user'),
-    url(r'^user/(?P<username>\w+)/follow/', views.follow_user, name='follow_user'),
-    url(r'^logout/$', views.logout_view, name='logout_view'),
-    url(r'^login/$', views.login_view, name='login_view'),
-    url(r'^register/$', views.register, name='register'),
-    url(r'^user/(?P<username>\w+)/', views.user_timeline, name='user_timeline'),
-    url(r'^admin/', include(admin.site.urls)),
-]
 ```
