@@ -130,29 +130,27 @@ def logout_view(request):
 {% load app_filters %}
 {% block body %}
 
-    <h2>
-        {% if request.resolver_match.url_name == 'public_timeline' %}
-            Public Timeline
-        {% elif request.resolver_match.url_name == 'user_timeline' %}
-            {{ profile_user.username }}'s Timeline
+    {% with request.resolver_match.url_name as url_name %}
+        {% if url_name == 'public_timeline' %}
+            <h2> Public Timeline </h2>
+        {% elif url_name == 'user_timeline' %}
+            <h2> {{ profile_user.username }}'s Timeline </h2>
+            {% if user.is_authenticated %}
+                <div class="followstatus">
+                    {% if user == profile_user %}
+                        This is you!
+                    {% elif followed %}
+                        You are currently following this user.
+                        <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
+                        .
+                    {% else %}
+                        You are not yet following this user.
+                        <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
+                    {% endif %}
+                </div>
+            {% endif %}
         {% else %}
-            My Timeline
-        {% endif %}
-
-    </h2>
-    {% if user.is_authenticated %}
-        {% if request.resolver_match.url_name == 'user_timeline' %}
-            <div class="followstatus">
-                {% if user == profile_user %} This is you!
-                {% elif followed %} You are currently following this user.
-                    <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
-                    .
-                {% else %} You are not yet following this user.
-                    <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
-                {% endif %}
-            </div>
-
-        {% elif request.resolver_match.url_name == 'timeline' %}
+            <h2>My Timeline </h2>
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
                     <div class="form-group">
@@ -167,8 +165,7 @@ def logout_view(request):
                 </div>
             </div>
         {% endif %}
-    {% endif %}
-
+    {% endwith %}
 
     {% if posts %}
         {% for post in posts %}
@@ -220,62 +217,5 @@ def logout_view(request):
 
 
 {% endblock %}
-```
 
-- Django's built-in forms
-```python
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-
-
-class UserForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ("username", "email", "password1", "password2")
-
-    def save(self):
-        user = User.objects.create_user(self.cleaned_data["username"], self.cleaned_data["email"],
-                                        self.cleaned_data["password1"])
-        user.save()
-        return user
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=255, required=True)
-    password = forms.CharField(widget=forms.PasswordInput, required=True)
-
-    def clean(self):
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        if not user or not user.is_active:
-            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
-        return self.cleaned_data
-
-    def login(self, request):
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        return user
-```
-
-
-- URLs
-
-```python
-urlpatterns = [
-    url(r'^$', views.MyTimeline.as_view(), name='timeline'),
-    url(r'public/', views.public_timeline, name='public_timeline'),
-    url(r'^user/(?P<username>\w+)/unfollow/', views.unfollow_user, name='unfollow_user'),
-    url(r'^user/(?P<username>\w+)/follow/', views.follow_user, name='follow_user'),
-    url(r'^logout/$', views.logout_view, name='logout_view'),
-    url(r'^login/$', views.login_view, name='login_view'),
-    url(r'^register/$', views.register, name='register'),
-    url(r'^user/(?P<username>\w+)/', views.user_timeline, name='user_timeline'),
-    url(r'^admin/', include(admin.site.urls)),
-]
 ```
