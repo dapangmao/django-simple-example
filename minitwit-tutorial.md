@@ -222,106 +222,47 @@ def logout_view(request):
 {% endblock %}
 ```
 
-- Use the `timeline` template multiple times 
-    - the template can detect url by `request.resolver_match.url_name `
-    
-    
-```html
-{% extends "layout.html" %}
-{% load app_filters %}
-{% block body %}
-
-    <h2>
-        {% if request.resolver_match.url_name == 'public_timeline' %}
-            Public Timeline
-        {% elif request.resolver_match.url_name == 'user_timeline' %}
-            {{ profile_user.username }}'s Timeline
-        {% else %}
-            My Timeline
-        {% endif %}
-
-    </h2>
-    {% if user.is_authenticated %}
-        {% if request.resolver_match.url_name == 'user_timeline' %}
-            <div class="followstatus">
-                {% if user == profile_user %} This is you!
-                {% elif followed %} You are currently following this user.
-                    <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
-                    .
-                {% else %} You are not yet following this user.
-                    <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
-                {% endif %}
-            </div>
-
-        {% elif request.resolver_match.url_name == 'timeline' %}
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    <div class="form-group">
-                        <label>What's on your mind ?</label>
-                        <form action="{% url 'timeline' %}" method="post">
-                            {% csrf_token %}
-                            <p>
-                                <input type="text" name="text" size="60">
-                                <button type="submit" class="btn btn-default">Share</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    {% endif %}
+- Django's built-in forms
+```python
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 
-    {% if posts %}
-        {% for post in posts %}
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <img src="{{ post.author.email|gravatar }}">
-                            <strong><a
-                                    href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong>
-                        </div>
-                        <div class="panel-body">
-                            {{ post.text | safe }}
-                            <small>&mdash; {{ post.pub_date|datetimeformat }}</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <div class="row">
-            <div class="col-lg-6 col-lg-offset-3">
-                There is no valid post yet.
-            </div>
-        </div>
-    {% endif %}
+class UserForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self):
+        user = User.objects.create_user(self.cleaned_data["username"], self.cleaned_data["email"],
+                                        self.cleaned_data["password1"])
+        user.save()
+        return user
 
 
-    <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-            <ul class="pagination pagination-centered">
-                {% if posts.has_previous %}
-                    <li><a href="?page=1"><<</a></li>
-                    `
-                    <li><a href="?page={{ posts.previous_page_number }}"><</a></li>
-                {% endif %}
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=255, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
 
-                {% for i in posts.paginator.page_range %}
-                    <li {% if posts.number == i %} class="active" {% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
-                {% endfor %}
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+        return self.cleaned_data
 
-                {% if posts.has_next %}
-                    <li><a href="?page={{ posts.next_page_number }}">></a></li>
-                    <li><a href="?page={{ posts.paginator.num_pages }}">>></a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-
-
-{% endblock %}
+    def login(self, request):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        return user
 ```
+
 
 - URLs
 
