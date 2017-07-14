@@ -322,3 +322,19 @@ def logout_view(request):
 
 {% endblock %}
 ```
+
+- URLs
+
+```python
+urlpatterns = [
+    url(r'^$', views.MyTimeline.as_view(), name='timeline'),
+    url(r'public/', views.public_timeline, name='public_timeline'),
+    url(r'^user/(?P<username>\w+)/unfollow/', views.unfollow_user, name='unfollow_user'),
+    url(r'^user/(?P<username>\w+)/follow/', views.follow_user, name='follow_user'),
+    url(r'^logout/$', views.logout_view, name='logout_view'),
+    url(r'^login/$', views.login_view, name='login_view'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^user/(?P<username>\w+)/', views.user_timeline, name='user_timeline'),
+    url(r'^admin/', include(admin.site.urls)),
+]
+```
