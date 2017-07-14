@@ -2,29 +2,27 @@
 {% load app_filters %}
 {% block body %}
 
-    <h2>
-        {% if request.resolver_match.url_name == 'public_timeline' %}
-            Public Timeline
-        {% elif request.resolver_match.url_name == 'user_timeline' %}
-            {{ profile_user.username }}'s Timeline
+    {% with request.resolver_match.url_name as url_name %}
+        {% if url_name == 'public_timeline' %}
+            <h2> Public Timeline </h2>
+        {% elif url_name == 'user_timeline' %}
+            <h2> {{ profile_user.username }}'s Timeline </h2>
+            {% if user.is_authenticated %}
+                <div class="followstatus">
+                    {% if user == profile_user %}
+                        This is you!
+                    {% elif followed %}
+                        You are currently following this user.
+                        <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
+                        .
+                    {% else %}
+                        You are not yet following this user.
+                        <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
+                    {% endif %}
+                </div>
+            {% endif %}
         {% else %}
-            My Timeline
-        {% endif %}
-
-    </h2>
-    {% if user.is_authenticated %}
-        {% if request.resolver_match.url_name == 'user_timeline' %}
-            <div class="followstatus">
-                {% if user == profile_user %} This is you!
-                {% elif followed %} You are currently following this user.
-                    <a class="unfollow" href="{% url 'unfollow_user' profile_user.username %}">Unfollow user</a>
-                    .
-                {% else %} You are not yet following this user.
-                    <a class="follow" href="{% url 'follow_user' profile_user.username %}">Follow user</a>.
-                {% endif %}
-            </div>
-
-        {% elif request.resolver_match.url_name == 'timeline' %}
+            <h2>My Timeline </h2>
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
                     <div class="form-group">
@@ -39,8 +37,7 @@
                 </div>
             </div>
         {% endif %}
-    {% endif %}
-
+    {% endwith %}
 
     {% if posts %}
         {% for post in posts %}
