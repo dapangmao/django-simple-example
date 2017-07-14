@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 
 
 class Follower(models.Model):
-    who = models.ForeignKey(User, on_delete=models.CASCADE)
-    whom = models.IntegerField()
+    follower = models.ForeignKey(User, on_delete=models.CASCADE)
+    followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followed')
+
+    class Meta:
+        unique_together = ('follower', 'followed')
 
 
 class Message(models.Model):

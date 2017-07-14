@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
@@ -26,9 +26,9 @@ def get_paged_posts(request, posts, n=5):
 def timeline(request):
     if not request.user.is_authenticated():
         return public_timeline(request)
-    following_ids = request.user.follower_set.values_list('whom', flat=True)
-    all_ids = list(following_ids) + [request.user.pk]
-    posts = Message.objects.filter(author_id__in=all_ids).order_by('-pub_date')
+    followed_users = request.user.follower_set.values_list('followed', flat=True)
+    all_ids = list(followed_users) + [request.user]
+    posts = Message.objects.filter(author__in=all_ids).order_by('-pub_date')
     paged_posts = get_paged_posts(request, posts)
     return render(request, 'timeline.html', {'posts': paged_posts})
 
@@ -40,40 +40,32 @@ def public_timeline(request):
 
 
 def user_timeline(request, username):
-    try:
-        profile_user = User.objects.get(username=username)
-    except ObjectDoesNotExist:
-        return Http404('this user does not exist')
+    profile_user = get_object_or_404(User, username=username)
     profile_user_posts = profile_user.message_set.order_by('-pub_date')
     is_followed, is_same_user = False, False
     if request.user.is_authenticated():
         current_user_id = request.user.pk
-        if request.user.follower_set.filter(whom=profile_user.pk).exists():
+        if request.user.follower_set.filter(followed=profile_user).exists():
             is_followed = True
         if profile_user.pk == current_user_id:
             is_same_user = True
     paged_posts = get_paged_posts(request, profile_user_posts)
-    return render(request, 'timeline.html', {'posts': paged_posts, 'profile_user': profile_user, 'followed': is_followed,
-                                             'same_user': is_same_user})
+    return render(request, 'timeline.html',
+                  {'posts': paged_posts, 'profile_user': profile_user, 'followed': is_followed,
+                   'same_user': is_same_user})
 
 
 @login_required
 def follow_user(request, username):
-    try:
-        whom_pk = User.objects.get(username=username).pk
-    except ObjectDoesNotExist:
-        return Http404('this user does not exist')
-    User.objects.get(pk=request.user.pk).follower_set.create(whom=whom_pk)
+    followed = get_object_or_404(User, username=username)
+    request.user.follower_set.create(followed=followed)
     return redirect('user_timeline', username=username)
 
 
 @login_required
 def unfollow_user(request, username):
-    try:
-        whom_pk = User.objects.get(username=username).pk
-    except ObjectDoesNotExist:
-        return Http404('this user does not exist')
-    Follower.objects.filter(who_id=request.user.pk, whom=whom_pk).delete()
+    followed = get_object_or_404(User, username=username)
+    request.user.follower_set.filter(followed=followed).delete()
     return redirect('user_timeline', username=username)
 
 
