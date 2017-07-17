@@ -27,7 +27,7 @@
                 <div class="col-lg-6 col-lg-offset-3">
                     <div class="form-group">
                         <label>What's on your mind ?</label>
-                        <form action="{% url 'timeline' %}" method="post">
+                        <form action="{% url 'my_timeline' %}" method="post">
                             {% csrf_token %}
                             <p>
                                 <input type="text" name="text" size="60">
@@ -47,11 +47,12 @@
                         <div class="panel-heading">
                             <img src="{{ post.author.email|gravatar }}">
                             <strong><a
-                                    href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}</a></strong>
+                                    href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}
+                            </a></strong>
                         </div>
                         <div class="panel-body">
                             {{ post.text | safe }}
-                            <small>&mdash; {{ post.pub_date|datetimeformat }}</small>
+                            <small>&mdash; {{ post.pub_date | datetimeformat }}</small>
                         </div>
                     </div>
                 </div>

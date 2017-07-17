@@ -24,31 +24,29 @@ def get_paged_posts(request, posts, n=5):
 
 
 class MyTimeline(LoginRequiredMixin, View):
-    login_url = '/public'
-    redirect_field_name = ''
-
     def get(self, request):
         followed_users = request.user.follower_set.values_list('followed', flat=True)
         all_users = list(followed_users) + [request.user]
-        posts = Message.objects.filter(author__in=all_users).order_by('-pub_date')
+        posts = Message.objects.filter(author__in=all_users).order_by('-pub_date').select_related('author')
         paged_posts = get_paged_posts(request, posts)
         return render(request, 'timeline.html', {'posts': paged_posts})
 
     def post(self, request):
-        if request.POST.get('text'):
-            request.user.message_set.create(text=request.POST.get('text'))
+        text = request.POST.get('text')
+        if text:
+            request.user.message_set.create(text=text)
         return self.get(request)
 
 
 def public_timeline(request):
-    posts = Message.objects.order_by('-pub_date')
+    posts = Message.objects.all().order_by('-pub_date').select_related('author')
     paged_posts = get_paged_posts(request, posts)
     return render(request, 'timeline.html', {'posts': paged_posts})
 
 
 def user_timeline(request, username):
     profile_user = get_object_or_404(User, username=username)
-    profile_user_posts = profile_user.message_set.order_by('-pub_date')
+    profile_user_posts = profile_user.message_set.order_by('-pub_date').select_related('author')
     is_followed = False
     if hasattr(request.user, 'follower_set') and request.user.follower_set.filter(followed=profile_user).exists():
         is_followed = True
@@ -68,32 +66,40 @@ def toggle_following(request, username):
     return redirect('user_timeline', username=username)
 
 
-def login_view(request):
-    if request.user.is_authenticated():
-        return redirect('timeline')
-    form = LoginForm(request.POST or None)
-    if request.POST and form.is_valid():
-        user = form.login(request)
-        if user:
-            login(request, user)
-            return redirect('timeline')
-    return render(request, 'login.html', {'form': form})
+class Login(View):
+    def get(self, request):
+        if request.user.is_authenticated():
+            return redirect('my_timeline')
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.login()
+            if user:
+                login(request, user)
+                return redirect('my_timeline')
+        return self.get(request)
 
 
-def register(request):
-    if request.user.is_authenticated():
-        return redirect('timeline')
-    if request.method == 'POST':
+class Register(View):
+    def get(self, request):
+        if request.user.is_authenticated():
+            return redirect('my_timeline')
+        form = UserForm()
+        return render(request, 'register.html', {'form': form})
+
+    def post(self, request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'You were successfully registered and can login now')
             return redirect('login_view')
-    else:
-        form = UserForm()
-    return render(request, 'register.html', {'form': form})
+        return self.get(request)
 
 
+@login_required
 def logout_view(request):
     logout(request)
     messages.success(request, 'You were logger out')
