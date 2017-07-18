@@ -104,5 +104,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LfBcSkUAAAAAE7AbseHmOUBwEDoIcwkljzPjm0F'
+
+
 LOGIN_URL = '/public'
 LOGIN_REDIRECT_URL = ''

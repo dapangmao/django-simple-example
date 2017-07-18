@@ -1,3 +1,7 @@
+import json
+import requests
+from django.conf import settings
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -67,6 +71,14 @@ def toggle_following(request, username):
 
 
 class Login(View):
+    def captcha(self, recaptcha_response):
+        data = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        return r.json()
+
     def get(self, request):
         if request.user.is_authenticated():
             return redirect('my_timeline')
@@ -76,6 +88,10 @@ class Login(View):
     def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
+            captcha_res = self.captcha(request.POST.get('g-recaptcha-response'))
+            if not captcha_res['success']:
+                messages.error(request, "Invalid reCaptcha. Please try again")
+                return self.get(request)
             user = form.login()
             if user:
                 login(request, user)
