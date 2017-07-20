@@ -1,4 +1,3 @@
-import json
 import requests
 from django.conf import settings
 
@@ -17,13 +16,15 @@ from .forms import UserForm, LoginForm
 
 def get_paged_posts(request, posts, n=5):
     paginator = Paginator(posts, n)
-    page = request.GET.get('page')
+    page = request.GET.get('page')  # it will parse the page argument
     try:
         paged_posts = paginator.page(page)
     except PageNotAnInteger:
         paged_posts = paginator.page(1)
     except EmptyPage:
         paged_posts = paginator.page(paginator.num_pages)
+    # The limitation could be given by
+    # https://stackoverflow.com/questions/30864011/display-only-some-of-the-page-numbers-by-django-pagination
     return paged_posts
 
 
