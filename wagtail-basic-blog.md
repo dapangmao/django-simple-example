@@ -1,3 +1,6 @@
+- Issue #1: tag will be a blog page nested under the blog-index-page
+
+
 - 5 models
 
 ```python
