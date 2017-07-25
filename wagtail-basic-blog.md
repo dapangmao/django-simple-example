@@ -106,8 +106,6 @@ class BlogTagIndexPage(Page):
 
     {% load wagtailcore_tags wagtailimages_tags%}
 
-    {% block body_class %}template-blogpage{% endblock %}
-
     {% block content %}
 
         <h1>{{ page.title }}</h1>
