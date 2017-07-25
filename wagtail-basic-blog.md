@@ -1,6 +1,6 @@
 - Issue #1: tag will be a blog page nested under the blog-index-page
 - Issue #2: use Wagtail models directly
-!()[https://github.com/dapangmao/django-simple-example/blob/master/images/Screen%20Shot%202017-07-25%20at%2010.27.23%20AM.png?raw=true]
+![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/Screen%20Shot%202017-07-25%20at%2010.27.23%20AM.png?raw=true)
 
 - 5 models
 
