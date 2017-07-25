@@ -72,3 +72,110 @@ class BlogTagIndexPage(Page):
 ```
 
 - 3 templates
+
+
+    - blog_index_page
+    ```
+    {%  extends "base.html" %}
+
+    {% load wagtailcore_tags wagtailimages_tags %}
+
+
+    {%  block content %}
+        <h1> {{ page.title }}</h1>
+
+        <div class="intro"> {{ page.intro| richtext }}</div>
+        {% for post in page.get_children %}
+            {% with post=post.specific %}
+                <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+
+                {% with post.main_image as main_image %}
+                    {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
+                {% endwith %}
+
+                <p>{{ post.intro }}</p>
+            {% endwith %}
+        {% endfor %}
+
+    {% endblock %}
+    ```
+    
+    - blog_page
+    ```
+    {% extends "base.html" %}
+
+    {% load wagtailcore_tags wagtailimages_tags%}
+
+    {% block body_class %}template-blogpage{% endblock %}
+
+    {% block content %}
+
+        <h1>{{ page.title }}</h1>
+        <p class="meta">{{ page.date }}</p>
+
+        {% if page.tags.all.count %}
+            <div class="tags">
+                <h3>Tags</h3>
+                {% for tag in page.tags.all %}
+                    <a href="{% slugurl 'tags' %}?tag={{ tag }}">
+                        <button type="button">{{ tag }}</button>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="intro">{{ page.intro }}</div>
+
+        {{ page.body|richtext }}
+
+        {% for item in page.gallery_images.all %}
+            <div style="float: left; margin: 10px;">
+                {% image item.image fill-320x240%}
+                <p>{{ item.caption }}</p>
+
+            </div>
+        {% endfor %}
+
+        <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+
+    {% endblock %}
+    ```
+    
+    - blog_tag_index_page
+    ```
+    {% extends "base.html" %}
+
+    {% load wagtailcore_tags %}
+
+    {% block content %}
+
+        {% if request.GET.tag %}
+            <h4>Showing pages tagged " {{ request.GET.tag }} "</h4>
+        {% endif %}
+
+        {% for blogpage in blogpages %}
+            <p>
+                <strong><a href="{% pageurl blogpage %}">
+                    {{ blogpage.title }}
+
+                </a> </strong>
+                <br/>
+
+                <small>Revised:
+                    {{ blogpage.date }}
+                </small>
+
+                {% if blogpage.author %}
+                    <br/>
+                    {% if blogpage.author %}
+                        <p>
+                            By {{ blogpage.author.profile }}
+
+                        </p>
+                    {% endif %}
+                {% endif %}
+
+            </p>
+        {% endfor %}
+    {% endblock %}
+    ```
