@@ -6,7 +6,7 @@
 
 ### Blog example
 
-- the streamblock [BaseStreamBlock](https://github.com/wagtail/bakerydemo/blob/master/bakerydemo/base/blocks.py#L53)
+- use the `streamblock` instead of `richtext` [BaseStreamBlock](https://github.com/wagtail/bakerydemo/blob/master/bakerydemo/base/blocks.py#L53)
     ![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/streamblock.PNG?raw=true)
 - the index page will be narrowed by the tag 
 
@@ -237,6 +237,9 @@ class BlogIndexPage(RoutablePageMixin, Page):
 #### Key templates
 
 - base.html
+
+    - disect the HTML to many smaller `include` parts
+    - just use CSS to implement the effects
 ```
 {% load navigation_tags static wagtailuserbar %}
 
@@ -289,6 +292,11 @@ class BlogIndexPage(RoutablePageMixin, Page):
 
 
 - blog_index_page.html
+
+    - also cover the tag index page as well
+    
+    
+    
 ```html
 {% extends "base.html" %}
 {% load wagtailcore_tags navigation_tags wagtailimages_tags %}
