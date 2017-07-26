@@ -1,7 +1,19 @@
 - Django 
-  - use DB as result backend -> `pip install django_celery_results`
-  - use DB and Admin to schedule async tasks -> `django_celery_beat`
+  - provide DB and UI spports for Celery
+    - use DB as result backend -> `pip install django_celery_results`
+    - use DB and Admin to schedule any async tasks -> `django_celery_beat`
+      - how to pass arguments?
+  - settings.py
+  ```
+  CELERY_BROKER_URL = 'redis://localhost:6379/0'
+  CELERY_RESULT_BACKEND = 'django-db'
 
-- Celery needs to instantiate two instances 
-  - beat: `celery -A test_async  beat -l info -S django`
-  - worker: `celery -A test_async worker -l info`
+  CELERY_ACCEPT_CONTENT = ['application/json']
+  CELERY_TASK_SERIALIZER = 'json'
+  CELERY_RESULT_SERIALIZER = 'json'
+  ```
+
+- Celery 
+  - needs to instantiate two instances 
+    - beat: `celery -A test_async  beat -l info -S django`
+    - worker: `celery -A test_async worker -l info`
