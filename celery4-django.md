@@ -1,3 +1,8 @@
+#### The basic structure
+
+![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/Note1_0(2).png?raw=true)
+
+
 - Django 
   - provide DB and UI spports for Celery
     - use DB as result backend -> `pip install django_celery_results`
