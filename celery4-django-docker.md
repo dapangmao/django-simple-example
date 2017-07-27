@@ -48,3 +48,20 @@
   RUN pip install -r requirements.txt
   ADD . /code/
   ```
+
+- `settings.py` for Django
+  - the names of the images are parsed 
+```
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
+    }
+}
+```
+  
