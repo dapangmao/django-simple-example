@@ -4,7 +4,7 @@
 
 ![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/Note1_0(2).png?raw=true)
 
-
+- The docs at http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
 
 #### The components
 
