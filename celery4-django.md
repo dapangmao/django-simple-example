@@ -1,7 +1,12 @@
 #### The basic structure
 
+- 3 instances
+
 ![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/Note1_0(2).png?raw=true)
 
+
+
+#### The components
 
 - Django 
   - provide DB and UI spports for Celery
