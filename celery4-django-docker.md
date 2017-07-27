@@ -1,3 +1,7 @@
+- docs
+  https://docs.docker.com/compose/django/
+
+
 - docker-compose.yml
 
   ```ymal
