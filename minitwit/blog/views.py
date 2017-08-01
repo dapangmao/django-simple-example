@@ -34,7 +34,7 @@ class MyTimeline(LoginRequiredMixin, View):
         all_users = list(followed_users) + [request.user]
         posts = Message.objects.filter(author__in=all_users).order_by('-pub_date').select_related('author')
         paged_posts = get_paged_posts(request, posts)
-        return render(request, 'timeline.html', {'posts': paged_posts})
+        return render(request, 'blog/timeline.html', {'posts': paged_posts})
 
     def post(self, request):
         text = request.POST.get('text')
@@ -46,7 +46,7 @@ class MyTimeline(LoginRequiredMixin, View):
 def public_timeline(request):
     posts = Message.objects.all().order_by('-pub_date').select_related('author')
     paged_posts = get_paged_posts(request, posts)
-    return render(request, 'timeline.html', {'posts': paged_posts})
+    return render(request, 'blog/timeline.html', {'posts': paged_posts})
 
 
 def user_timeline(request, username):
@@ -56,7 +56,7 @@ def user_timeline(request, username):
     if hasattr(request.user, 'follower_set') and request.user.follower_set.filter(followed=profile_user).exists():
         is_followed = True
     paged_posts = get_paged_posts(request, profile_user_posts)
-    return render(request, 'timeline.html',
+    return render(request, 'blog/timeline.html',
                   {'posts': paged_posts, 'profile_user': profile_user, 'followed': is_followed})
 
 
@@ -84,7 +84,7 @@ class Login(View):
         if request.user.is_authenticated():
             return redirect('my_timeline')
         form = LoginForm()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'blog/login.html', {'form': form})
 
     def post(self, request):
         form = LoginForm(request.POST)
@@ -105,7 +105,7 @@ class Register(View):
         if request.user.is_authenticated():
             return redirect('my_timeline')
         form = UserForm()
-        return render(request, 'register.html', {'form': form})
+        return render(request, 'blog/register.html', {'form': form})
 
     def post(self, request):
         form = UserForm(request.POST)
