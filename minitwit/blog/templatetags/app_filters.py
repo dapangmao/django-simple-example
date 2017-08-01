@@ -1,5 +1,6 @@
 from django import template
 from hashlib import md5
+from django.utils import timezone
 
 register = template.Library()
 
@@ -13,4 +14,4 @@ def gravatar_url(email):
 @register.filter(name='datetimeformat')
 def format_datetime(datetime):
     """Format a timestamp for display."""
-    return datetime.strftime('%Y-%m-%d @ %H:%M')
+    return timezone.localtime(datetime).strftime('%Y-%m-%d @ %H:%M')
