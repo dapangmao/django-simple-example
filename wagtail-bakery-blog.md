@@ -6,7 +6,7 @@
 
 ### Blog example
 
-- the streamblock [BaseStreamBlock](https://github.com/wagtail/bakerydemo/blob/master/bakerydemo/base/blocks.py#L53)
+- use the `streamblock` instead of `richtext` [BaseStreamBlock](https://github.com/wagtail/bakerydemo/blob/master/bakerydemo/base/blocks.py#L53)
     ![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/streamblock.PNG?raw=true)
 - the index page will be narrowed by the tag 
 
@@ -234,8 +234,69 @@ class BlogIndexPage(RoutablePageMixin, Page):
         return tags
 ```
 
-#### Two templates
+#### Key templates
+
+- base.html
+
+    - disect the HTML to many smaller `include` parts
+    - just use CSS to implement the effects
+```
+{% load navigation_tags static wagtailuserbar %}
+
+{% block head %}
+    {% include "includes/head.html" %}
+{% endblock head %}
+
+<body class="{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}">
+{% wagtailuserbar %}
+
+{% block header %}
+    {# Header contains the main_navigation block #}
+    {% include "includes/header.html" with parent=site_root calling_page=self %}
+{% endblock header %}
+
+{% block head-extra %}
+{% endblock head-extra %}
+
+{% block messages %}
+    {% include "includes/messages.html" %}
+{% endblock messages %}
+
+
+{% block breadcrumbs %}
+{#     breadcrumbs is defined in base/templatetags/navigation_tags.py#}
+    {% breadcrumbs %}
+{% endblock breadcrumbs %}
+
+<content role="main">
+    {% block content %}
+    {% endblock content %}
+</content>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        {% include "includes/footer.html" %}
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+```
+
+
 - blog_index_page.html
+
+    - also cover the tag index page as well
+    
+    
+    
 ```html
 {% extends "base.html" %}
 {% load wagtailcore_tags navigation_tags wagtailimages_tags %}
@@ -342,16 +403,41 @@ class BlogIndexPage(RoutablePageMixin, Page):
 {% endblock content %}
 ```
 
-- header-index.html
+- header.html
 ```html
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load navigation_tags %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>{{ page.title }}</h1>
-            <p>{{ page.introduction }}</p>
+<div class="header clearfix" role="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="/" class="logo">I am the Wagtail Bakery</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navigation" aria-label="Mobile menu" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                <form action="/search" method="get" class="search" _lpchecked="1" role="search">
+                    <input name="q" type="text" placeholder="Search the site" id="" aria-label="Search the site" autocomplete="off">
+                    <a href="#" class="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451 451"><path d="M447.05 428l-109.6-109.6c29.4-33.8 47.2-77.9 47.2-126.1C384.65 86.2 298.35 0 192.35 0 86.25 0 .05 86.3.05 192.3s86.3 192.3 192.3 192.3c48.2 0 92.3-17.8 126.1-47.2L428.05 447c2.6 2.6 6.1 4 9.5 4s6.9-1.3 9.5-4c5.2-5.2 5.2-13.8 0-19zM26.95 192.3c0-91.2 74.2-165.3 165.3-165.3 91.2 0 165.3 74.2 165.3 165.3s-74.1 165.4-165.3 165.4c-91.1 0-165.3-74.2-165.3-165.4z"></path></svg>
+                    </a>
+                </form>
+
+                {% block main_navigation %}
+                    <nav class="collapse navbar-collapse" id="main-navigation" role="navigation" aria-label="Primary site navigation">
+                        <ul class="nav nav-pills">
+                            {# main_menu is defined in base/templatetags/navigation_tags.py #}
+                            {% get_site_root as site_root %}
+                            {% top_menu parent=site_root calling_page=self %}
+                        </ul>
+                    </nav>
+                {% endblock %}
+            </div>
         </div>
     </div>
 </div>
+
 ```
