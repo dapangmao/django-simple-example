@@ -29,15 +29,16 @@ def get_chapter_titles():
     Chapter 22: Testing Chapter of Doom!
     Chapter 23: Documentation: Be Obsessed
     Chapter 24: Finding and Reducing Bottlenecks
-    Chapter 25: Security Best Practices
-    Chapter 26: Logging: What's It For, Anyway?
-    Chapter 27: Signals: Use Cases and Avoidance Techniques
-    Chapter 28: What About Those Random Utilities?
-    Chapter 29: Deployment: Platforms as a Service
-    Chapter 30: Deploying Django Projects
-    Chapter 31: Continuous Integration
-    Chapter 32: The Art of Debugging
-    Chapter 33: Where and How to Ask Django Questions
+    Chapter 25: Async Task Queue
+    Chapter 26: Security Best Practices
+    Chapter 27: Logging: What's It For, Anyway?
+    Chapter 29: Signals: Use Cases and Avoidance Techniques
+    Chapter 30: What About Those Random Utilities?
+    Chapter 31: Deployment: Platforms as a Service
+    Chapter 32: Deploying Django Projects
+    Chapter 33: Continuous Integration
+    Chapter 34: The Art of Debugging
+    Chapter 35: Where and How to Ask Django Questions
     """
 
     chapters = [x.strip() for x in _chapters.split("\n") if x]
