@@ -1,7 +1,8 @@
 import os
 import sys
-sys.stdout = open('two-scoops-of-django-1.11.md','wt')
-all_files = os.listdir("./code")
+import subprocess
+import shutil
+
 
 def get_chapter_titles():
     _chapters = """
@@ -32,7 +33,8 @@ def get_chapter_titles():
     Chapter 25: Async Task Queue
     Chapter 26: Security Best Practices
     Chapter 27: Logging: What's It For, Anyway?
-    Chapter 29: Signals: Use Cases and Avoidance Techniques
+    Chapter 28: Signals: Use Cases and Avoidance Techniques
+    Chapter 29: What About Those Random Utilities?
     Chapter 30: What About Those Random Utilities?
     Chapter 31: Deployment: Platforms as a Service
     Chapter 32: Deploying Django Projects
@@ -53,7 +55,7 @@ def get_chapter_titles():
 def write2file(cdict):
     pass_id = 0
     for file in all_files:
-        with open(os.path.join("code", file), 'r') as infile:
+        with open(os.path.join("./two-scoops-of-django-1.11/code", file), 'r') as infile:
             id = int(file.split("_")[1])
             if id in cdict and id != pass_id:
                 print("## " + cdict.get(id) + "\n")
@@ -65,5 +67,11 @@ def write2file(cdict):
             pass_id = id
 
 
-cdict = get_chapter_titles()
-write2file(cdict=cdict)
+if __name__ == "__main__":
+    sys.stdout = open('two-scoops-of-django-1.11.md','wt')
+    if not os.path.exists('./two-scoops-of-django-1.11'):
+        subprocess.check_call(['git', 'clone', 'https://github.com/twoscoops/two-scoops-of-django-1.11.git'])
+    all_files = os.listdir("./two-scoops-of-django-1.11/code")
+    cdict = get_chapter_titles()
+    write2file(cdict=cdict)
+    shutil.rmtree('./two-scoops-of-django-1.11')

@@ -4082,6 +4082,8 @@ import logging
 logger = logging.getLogger(__name__)
 ``` 
 
+## Chapter 28: Signals: Use Cases and Avoidance Techniques
+
 
 #### chapter_28_example_01.py 
 
@@ -4164,7 +4166,7 @@ END: {end}""".format(title=self.title, start=self.start,
 ...     )
 ``` 
 
-## Chapter 29: Signals: Use Cases and Avoidance Techniques
+## Chapter 29: What About Those Random Utilities?
 
 
 #### chapter_29_example_01.txt 
