@@ -1,6 +1,7 @@
-# Chapter 1: Coding Style
+## Chapter 1: Coding Style
 
-### chapter_01_example_01.py
+
+#### chapter_01_example_01.py 
 
 ```python
 # Stdlib imports
@@ -16,9 +17,10 @@ from django_extensions.db.models import TimeStampedModel
 
 # Imports from your apps
 from splits.models import BananaSplit
-```
+``` 
 
-### chapter_01_example_02.py
+
+#### chapter_01_example_02.py 
 
 ```python
 # cones/views.py
@@ -34,9 +36,10 @@ from core.views import FoodMixin
 class WaffleConeCreateView(FoodMixin, CreateView):
     model = WaffleCone
     form_class = WaffleConeForm
-```
+``` 
 
-### chapter_01_example_03.py
+
+#### chapter_01_example_03.py 
 
 ```python
 # cones/views.py
@@ -50,39 +53,44 @@ from core.views import FoodMixin
 class WaffleConeCreateView(FoodMixin, CreateView):
     model = WaffleCone
     form_class = WaffleConeForm
-```
+``` 
 
-### chapter_01_example_04.py
+
+#### chapter_01_example_04.py 
 
 ```python
 from django import forms
 from django.db import models
-```
+``` 
 
-### chapter_01_example_05.py
+
+#### chapter_01_example_05.py 
 
 ```python
 # ANTI-PATTERN: Don't do this!
 from django.forms import *
 from django.db.models import *
-```
+``` 
 
-### chapter_01_example_06.py
+
+#### chapter_01_example_06.py 
 
 ```python
 # ANTI-PATTERN: Don't do this!
 from django.db.models import CharField
 from django.forms import CharField
-```
+``` 
 
-### chapter_01_example_07.py
+
+#### chapter_01_example_07.py 
 
 ```python
 from django.db.models import CharField as ModelCharField
 from django.forms import CharField as FormCharField
-```
+``` 
 
-### chapter_01_example_08.py
+
+#### chapter_01_example_08.py 
 
 ```python
 patterns = [
@@ -90,9 +98,10 @@ patterns = [
         view=views.add_topping,
         name='add-topping'),
     ]
-```
+``` 
 
-### chapter_01_example_09.py
+
+#### chapter_01_example_09.py 
 
 ```python
 patterns = [
@@ -100,33 +109,37 @@ patterns = [
         view=views.add_topping,
         name='add_topping'),
     ]
-```
+``` 
 
-# Chapter 2: The Optimal Django Environment Setup
+## Chapter 2: The Optimal Django Environment Setup
 
-### chapter_02_example_01.txt
+
+#### chapter_02_example_01.txt 
 
 ```python
 $ source ~/.virtualenvs/twoscoops/bin/activate
-```
+``` 
 
-### chapter_02_example_02.txt
+
+#### chapter_02_example_02.txt 
 
 ```python
 $ workon twoscoops
-```
+``` 
 
-# Chapter 3: How to Lay Out Django Projects
+## Chapter 3: How to Lay Out Django Projects
 
-### chapter_03_example_01.txt
+
+#### chapter_03_example_01.txt 
 
 ```python
 django-admin.py startproject mysite
 cd mysite
 django-admin.py startapp my_app
-```
+``` 
 
-### chapter_03_example_02.txt
+
+#### chapter_03_example_02.txt 
 
 ```python
 mysite/
@@ -145,17 +158,19 @@ mysite/
 │   ├── settings.py
 │   ├── urls.py
 │   ├── wsgi.py
-```
+``` 
 
-### chapter_03_example_03.txt
+
+#### chapter_03_example_03.txt 
 
 ```python
 <repository_root>/
 ├── <configuration_root>/
 ├── <django_project_root>/
-```
+``` 
 
-### chapter_03_example_04.txt
+
+#### chapter_03_example_04.txt 
 
 ```python
   icecreamratings_project
@@ -177,41 +192,47 @@ mysite/
   ├── README.rst
   ├── manage.py
   └── requirements.txt
-```
+``` 
 
-### chapter_03_example_05.txt
+
+#### chapter_03_example_05.txt 
 
 ```python
 ~/projects/icecreamratings_project/
 ~/.envs/icecreamratings/
-```
+``` 
 
-### chapter_03_example_06.txt
+
+#### chapter_03_example_06.txt 
 
 ```python
 c:\projects\icecreamratings_project\
 c:\envs\icecreamratings\
-```
+``` 
 
-### chapter_03_example_07.txt
+
+#### chapter_03_example_07.txt 
 
 ```python
   ~/.virtualenvs/icecreamratings/
-```
+``` 
 
-### chapter_03_example_08.txt
+
+#### chapter_03_example_08.txt 
 
 ```python
 $ pip freeze
-```
+``` 
 
-### chapter_03_example_09.txt
+
+#### chapter_03_example_09.txt 
 
 ```python
 $ pip freeze > requirements.txt
-```
+``` 
 
-### chapter_03_example_10.txt
+
+#### chapter_03_example_10.txt 
 
 ```python
 $ cookiecutter https://github.com/pydanny/cookiecutter-django
@@ -237,11 +258,12 @@ year ('2017')?
 use_whitenoise ('n')?
 github_username ('audreyr')? twoscoops
 full_name ('Audrey Roy')? Daniel and Audrey Roy Greenfeld
-```
+``` 
 
-# Chapter 4: Fundamentals of Django App Design
+## Chapter 4: Fundamentals of Django App Design
 
-### chapter_04_example_01.txt
+
+#### chapter_04_example_01.txt 
 
 ```python
 # Common modules
@@ -256,9 +278,10 @@ scoops/
 ├── tests/
 ├── urls.py
 ├── views.py
-```
+``` 
 
-### chapter_04_example_02.txt
+
+#### chapter_04_example_02.txt 
 
 ```python
 # uncommon modules
@@ -278,11 +301,12 @@ scoops/
 ├── signals.py
 ├── utils.py
 ├── viewmixins.py
-```
+``` 
 
-# Chapter 5: Settings and Requirements Files
+## Chapter 5: Settings and Requirements Files
 
-### chapter_05_example_01.txt
+
+#### chapter_05_example_01.txt 
 
 ```python
 settings/
@@ -292,21 +316,24 @@ settings/
 ├── staging.py
 ├── test.py
 ├── production.py
-```
+``` 
 
-### chapter_05_example_02.txt
+
+#### chapter_05_example_02.txt 
 
 ```python
   python manage.py shell --settings=twoscoops.settings.local
-```
+``` 
 
-### chapter_05_example_03.txt
+
+#### chapter_05_example_03.txt 
 
 ```python
 python manage.py runserver --settings=twoscoops.settings.local
-```
+``` 
 
-### chapter_05_example_04.py
+
+#### chapter_05_example_04.py 
 
 ```python
 from .base import *
@@ -324,15 +351,17 @@ DATABASES = {
 }
 
 INSTALLED_APPS += ['debug_toolbar', ]
-```
+``` 
 
-### chapter_05_example_05.txt
+
+#### chapter_05_example_05.txt 
 
 ```python
 python manage.py runserver --settings=twoscoops.settings.local
-```
+``` 
 
-### chapter_05_example_06.py
+
+#### chapter_05_example_06.py 
 
 ```python
 # settings/local_pydanny.py
@@ -340,9 +369,10 @@ from .local import *
 
 # Set short cache timeout
 CACHE_TIMEOUT = 30
-```
+``` 
 
-### chapter_05_example_07.txt
+
+#### chapter_05_example_07.txt 
 
 ```python
 settings/
@@ -354,77 +384,87 @@ settings/
     staging.py
     test.py
     production.py
-```
+``` 
 
-### chapter_05_example_08.txt
+
+#### chapter_05_example_08.txt 
 
 ```python
 export SOME_SECRET_KEY=1c3-cr3am-15-yummy
 export AUDREY_FREEZER_KEY=y34h-r1ght-d0nt-t0uch-my-1c3-cr34m
-```
+``` 
 
-### chapter_05_example_09.txt
+
+#### chapter_05_example_09.txt 
 
 ```python
 > setx SOME_SECRET_KEY 1c3-cr3am-15-yummy
-```
+``` 
 
-### chapter_05_example_10.txt
+
+#### chapter_05_example_10.txt 
 
 ```python
 [Environment]::SetEnvironmentVariable('SOME_SECRET_KEY',
                                     '1c3-cr3am-15-yummy', 'User')
 [Environment]::SetEnvironmentVariable('AUDREY_FREEZER_KEY',
                     'y34h-r1ght-d0nt-t0uch-my-1c3-cr34m', 'User')
-```
+``` 
 
-### chapter_05_example_11.txt
+
+#### chapter_05_example_11.txt 
 
 ```python
 [Environment]::SetEnvironmentVariable('SOME_SECRET_KEY',
                                 '1c3-cr3am-15-yummy', 'Machine')
 [Environment]::SetEnvironmentVariable('AUDREY_FREEZER_KEY',
                 'y34h-r1ght-d0nt-t0uch-my-1c3-cr34m', 'Machine')
-```
+``` 
 
-### chapter_05_example_12.txt
+
+#### chapter_05_example_12.txt 
 
 ```python
 unset SOME_SECRET_KEY
 unset AUDREY_FREEZER_KEY
-```
+``` 
 
-### chapter_05_example_13.txt
+
+#### chapter_05_example_13.txt 
 
 ```python
 [Environment]::UnsetEnvironmentVariable('SOME_SECRET_KEY', 'User')
 [Environment]::UnsetEnvironmentVariable('AUDREY_FREEZER_KEY', 'User')
-```
+``` 
 
-### chapter_05_example_14.txt
+
+#### chapter_05_example_14.txt 
 
 ```python
 eb setenv SOME_SECRET_KEY=1c3-cr3am-15-yummy  # Elastic Beanstalk
 heroku config:set SOME_SECRET_KEY=1c3-cr3am-15-yummy  # Heroku
-```
+``` 
 
-### chapter_05_example_15.py
+
+#### chapter_05_example_15.py 
 
 ```python
 >>> import os
 >>> os.environ['SOME_SECRET_KEY']
 '1c3-cr3am-15-yummy'
-```
+``` 
 
-### chapter_05_example_16.py
+
+#### chapter_05_example_16.py 
 
 ```python
 # Top of settings/production.py
 import os
 SOME_SECRET_KEY = os.environ['SOME_SECRET_KEY']
-```
+``` 
 
-### chapter_05_example_17.py
+
+#### chapter_05_example_17.py 
 
 ```python
 # settings/base.py
@@ -441,22 +481,25 @@ def get_env_variable(var_name):
     except KeyError:
         error_msg = 'Set the {} environment variable'.format(var_name)
         raise ImproperlyConfigured(error_msg)
-```
+``` 
 
-### chapter_05_example_18.py
+
+#### chapter_05_example_18.py 
 
 ```python
 SOME_SECRET_KEY = get_env_variable('SOME_SECRET_KEY')
-```
+``` 
 
-### chapter_05_example_19.py
+
+#### chapter_05_example_19.py 
 
 ```python
 django.core.exceptions.ImproperlyConfigured: Set the SOME_SECRET_KEY
 environment variable.
-```
+``` 
 
-### chapter_05_example_20.json
+
+#### chapter_05_example_20.json 
 
 ```python
 {
@@ -465,9 +508,10 @@ environment variable.
   "DATABASES_HOST": "127.0.0.1",
   "PORT": "5432"
 }
-```
+``` 
 
-### chapter_05_example_21.py
+
+#### chapter_05_example_21.py 
 
 ```python
 # settings/base.py
@@ -490,9 +534,10 @@ def get_secret(setting, secrets=secrets):
         raise ImproperlyConfigured(error_msg)
 
 SECRET_KEY = get_secret('SECRET_KEY')
-```
+``` 
 
-### chapter_05_example_22.txt
+
+#### chapter_05_example_22.txt 
 
 ```python
 requirements/
@@ -500,53 +545,60 @@ requirements/
 ├── local.txt
 ├── staging.txt
 ├── production.txt
-```
+``` 
 
-### chapter_05_example_23.txt
+
+#### chapter_05_example_23.txt 
 
 ```python
 Django==1.11.0
 psycopg2==2.6.2
 djangorestframework==3.4.0
-```
+``` 
 
-### chapter_05_example_24.txt
+
+#### chapter_05_example_24.txt 
 
 ```python
 -r base.txt # includes the base.txt requirements file
 
 coverage==4.2
 django-debug-toolbar==1.5
-```
+``` 
 
-### chapter_05_example_25.txt
+
+#### chapter_05_example_25.txt 
 
 ```python
 -r base.txt # includes the base.txt requirements file
 
 coverage==4.2
 django-jenkins==0.19.0
-```
+``` 
 
-### chapter_05_example_26.txt
+
+#### chapter_05_example_26.txt 
 
 ```python
 -r base.txt # includes the base.txt requirements file
-```
+``` 
 
-### chapter_05_example_27.txt
+
+#### chapter_05_example_27.txt 
 
 ```python
 pip install -r requirements/local.txt
-```
+``` 
 
-### chapter_05_example_28.txt
+
+#### chapter_05_example_28.txt 
 
 ```python
 pip install -r requirements/production.txt
-```
+``` 
 
-### chapter_05_example_29.py
+
+#### chapter_05_example_29.py 
 
 ```python
 # settings/base.py
@@ -571,9 +623,10 @@ TEMPLATES = [
         DIRS: ['/Users/pydanny/twoscoops_project/templates',]
     },
 ]
-```
+``` 
 
-### chapter_05_example_30.py
+
+#### chapter_05_example_30.py 
 
 ```python
 # At the top of settings/base.py
@@ -589,9 +642,10 @@ TEMPLATES = [
         'DIRS': [BASE_DIR / 'templates']
     },
 ]
-```
+``` 
 
-### chapter_05_example_31.py
+
+#### chapter_05_example_31.py 
 
 ```python
 # At the top of settings/base.py
@@ -613,11 +667,12 @@ TEMPLATES = [
         'DIRS': [root('templates')],
     },
 ]
-```
+``` 
 
-# Chapter 6: Model Best Practices
+## Chapter 6: Model Best Practices
 
-### chapter_06_example_01.py
+
+#### chapter_06_example_01.py 
 
 ```python
 from django.db import models
@@ -632,16 +687,18 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
-```
+``` 
 
-### chapter_06_example_02.py
+
+#### chapter_06_example_02.py 
 
 ```python
 class Meta:
     abstract = True
-```
+``` 
 
-### chapter_06_example_03.py
+
+#### chapter_06_example_03.py 
 
 ```python
 # flavors/models.py
@@ -651,9 +708,10 @@ from core.models import TimeStampedModel
 
 class Flavor(TimeStampedModel):
     title = models.CharField(max_length=200)
-```
+``` 
 
-### chapter_06_example_04.py
+
+#### chapter_06_example_04.py 
 
 ```python
 from django.db import migrations, models
@@ -691,9 +749,10 @@ class Migration(migrations.Migration):
         # RunPython.noop does nothing but allows reverse migrations to occur
         migrations.RunPython(add_cones, migrations.RunPython.noop)
     ]
-```
+``` 
 
-### chapter_06_example_05.py
+
+#### chapter_06_example_05.py 
 
 ```python
 # orders/models.py
@@ -716,17 +775,19 @@ class IceCreamOrder(models.Model):
         max_length=2,
         choices=FLAVOR_CHOICES
     )
-```
+``` 
 
-### chapter_06_example_06.py
+
+#### chapter_06_example_06.py 
 
 ```python
 >>> from orders.models import IceCreamOrder
 >>> IceCreamOrder.objects.filter(flavor=IceCreamOrder.FLAVOR_CHOCOLATE)
 [<icecreamorder: 35>, <icecreamorder: 42>, <icecreamorder: 49>]
-```
+``` 
 
-### chapter_06_example_07.py
+
+#### chapter_06_example_07.py 
 
 ```python
 from django import models
@@ -747,18 +808,20 @@ class IceCreamOrder(models.Model):
         max_length=2,
         choices=[x.value for x in FLAVORS]
     )
-```
+``` 
 
-### chapter_06_example_08.py
+
+#### chapter_06_example_08.py 
 
 ```python
 >>> from orders.models import IceCreamOrder
 >>> chocolate = IceCreamOrder.FLAVORS.get_value('chocolate')
 >>> IceCreamOrder.objects.filter(flavor=chocolate)
 [<icecreamorder: 35>, <icecreamorder: 42>, <icecreamorder: 49>]
-```
+``` 
 
-### chapter_06_example_09.py
+
+#### chapter_06_example_09.py 
 
 ```python
 from django.db import models
@@ -777,9 +840,10 @@ class FlavorReview(models.Model):
 
     # add our custom model manager
     objects = PublishedManager()
-```
+``` 
 
-### chapter_06_example_10.py
+
+#### chapter_06_example_10.py 
 
 ```python
 >>> from reviews.models import FlavorReview
@@ -787,9 +851,10 @@ class FlavorReview(models.Model):
 35
 >>> FlavorReview.objects.published().count()
 31
-```
+``` 
 
-### chapter_06_example_11.py
+
+#### chapter_06_example_11.py 
 
 ```python
 >>> from reviews.models import FlavorReview
@@ -797,11 +862,12 @@ class FlavorReview(models.Model):
 35
 >>> FlavorReview.published.filter().count()
 31
-```
+``` 
 
-# Chapter 7: Queries and the Database Layer
+## Chapter 7: Queries and the Database Layer
 
-### chapter_07_example_01.py
+
+#### chapter_07_example_01.py 
 
 ```python
 from django.core.exceptions import ObjectDoesNotExist
@@ -822,9 +888,10 @@ def list_any_line_item(model, sku):
     except ObjectDoesNotExist:
         msg = 'We are out of {0}'.format(sku)
         raise OutOfStock(msg)
-```
+``` 
 
-### chapter_07_example_02.py
+
+#### chapter_07_example_02.py 
 
 ```python
 from flavors.models import Flavor
@@ -839,9 +906,10 @@ def list_flavor_line_item(sku):
     except Flavor.MultipleObjectsReturned:
         msg = 'Multiple items have SKU {}. Please fix!'.format(sku)
         raise CorruptedDatabase(msg)
-```
+``` 
 
-### chapter_07_example_03.py
+
+#### chapter_07_example_03.py 
 
 ```python
 # Don't do this!
@@ -853,9 +921,10 @@ def fun_function(**kwargs):
     """Find working ice cream promo"""
     # Too much query chaining makes code go off the screen or page. Not good.
     return Promo.objects.active().filter(Q(name__startswith=name)|Q(description__icontains=name)).exclude(status='melted')
-```
+``` 
 
-### chapter_07_example_04.py
+
+#### chapter_07_example_04.py 
 
 ```python
 # Do this!
@@ -873,9 +942,10 @@ def fun_function(**kwargs):
     results = results.exclude(status='melted')
     results = results.select_related('flavors')
     return results
-```
+``` 
 
-### chapter_07_example_05.py
+
+#### chapter_07_example_05.py 
 
 ```python
 # Do this!
@@ -896,9 +966,10 @@ def fun_function(**kwargs):
           .select_related('flavors')
       )
     return qs
-```
+``` 
 
-### chapter_07_example_06.py
+
+#### chapter_07_example_06.py 
 
 ```python
 def fun_function(**kwargs):
@@ -916,9 +987,10 @@ def fun_function(**kwargs):
     )
     import pdb; pdb.set_trace()
     return qs
-```
+``` 
 
-### chapter_07_example_07.py
+
+#### chapter_07_example_07.py 
 
 ```python
 # Don't do this!
@@ -928,9 +1000,10 @@ customers = []
 for customer in Customer.objects.iterator():
     if customer.scoops_ordered > customer.store_visits:
         customers.append(customer)
-```
+``` 
 
-### chapter_07_example_08.py
+
+#### chapter_07_example_08.py 
 
 ```python
 from django.db.models import F
@@ -938,15 +1011,17 @@ from django.db.models import F
 from models.customers import Customer
 
 customers = Customer.objects.filter(scoops_ordered__gt=F('store_visits'))
-```
+``` 
 
-### chapter_07_example_09.sql
+
+#### chapter_07_example_09.sql 
 
 ```python
 SELECT * from customers_customer where scoops_ordered > store_visits
-```
+``` 
 
-### chapter_07_example_10.py
+
+#### chapter_07_example_10.py 
 
 ```python
 # settings/base.py
@@ -957,9 +1032,10 @@ DATABASES = {
         'ATOMIC_REQUESTS': True,
     },
 }
-```
+``` 
 
-### chapter_07_example_11.py
+
+#### chapter_07_example_11.py 
 
 ```python
 # flavors/views.py
@@ -988,11 +1064,12 @@ def posting_flavor_status(request, pk, status):
 
     # If the transaction fails, return the appropriate status
     return HttpResponse('Sadness', status_code=400)
-```
+``` 
 
-# Chapter 8: Function- and Class-Based Views
+## Chapter 8: Function- and Class-Based Views
 
-### chapter_08_example_01.py
+
+#### chapter_08_example_01.py 
 
 ```python
 # Don't do this!
@@ -1013,9 +1090,10 @@ urlpatterns = [
             template_name='tastings/results.html'),
         name='results'),
 ]
-```
+``` 
 
-### chapter_08_example_02.py
+
+#### chapter_08_example_02.py 
 
 ```python
 from django.urls import reverse
@@ -1038,9 +1116,10 @@ class TasteUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('tastings:detail',
             kwargs={'pk': self.object.pk})
-```
+``` 
 
-### chapter_08_example_03.py
+
+#### chapter_08_example_03.py 
 
 ```python
 from django.conf.urls import url
@@ -1069,17 +1148,19 @@ urlpatterns = [
         name='update'
     )
 ]
-```
+``` 
 
-### chapter_08_example_04.py
+
+#### chapter_08_example_04.py 
 
 ```python
 urlpatterns += [
     url(r'^tastings/', include('tastings.urls', namespace='tastings')),
 ]
-```
+``` 
 
-### chapter_08_example_05.py
+
+#### chapter_08_example_05.py 
 
 ```python
 # tastings/views.py snippet
@@ -1089,9 +1170,10 @@ class TasteUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('tastings:detail',
             kwargs={'pk': self.object.pk})
-```
+``` 
 
-### chapter_08_example_06.html
+
+#### chapter_08_example_06.html 
 
 ```python
 {% extends 'base.html' %}
@@ -1110,9 +1192,10 @@ class TasteUpdateView(UpdateView):
   {% endfor %}
 </ul>
 {% endblock content %}
-```
+``` 
 
-### chapter_08_example_07.py
+
+#### chapter_08_example_07.py 
 
 ```python
 # urls.py at root of project
@@ -1122,9 +1205,10 @@ urlpatterns += [
     url(r'^report-problem/', include('contactapp.urls',
                                             namespace='contactapp')),
 ]
-```
+``` 
 
-### chapter_08_example_08.html
+
+#### chapter_08_example_08.html 
 
 ```python
 {% extends "base.html" %}
@@ -1137,9 +1221,10 @@ urlpatterns += [
   <a href="{% url 'contactapp:report' %}">Report a Problem</a>
 </p>
 {% endblock content %}
-```
+``` 
 
-### chapter_08_example_09.py
+
+#### chapter_08_example_09.py 
 
 ```python
 # Django FBV as a function
@@ -1151,9 +1236,10 @@ y = f(x)
 # ... and then translated into a CBV example
 HttpResponse = View.as_view()(HttpRequest)
 
-```
+``` 
 
-### chapter_08_example_10.py
+
+#### chapter_08_example_10.py 
 
 ```python
 from django.http import HttpResponse
@@ -1169,9 +1255,10 @@ class SimplestView(View):
     def get(self, request, *args, **kwargs):
         # Business logic goes here
         return HttpResponse('CBV')
-```
+``` 
 
-### chapter_08_example_11.py
+
+#### chapter_08_example_11.py 
 
 ```python
 # Don't do this!
@@ -1179,9 +1266,10 @@ def ice_cream_store_display(request, store_id):
     store = get_object_or_404(Store, id=store_id)
     date = timezone.now()
     return render(request, 'melted_ice_cream_report.html', locals())
-```
+``` 
 
-### chapter_08_example_12.py
+
+#### chapter_08_example_12.py 
 
 ```python
 # Don't do this!
@@ -1189,9 +1277,10 @@ def ice_cream_store_display(request, store_id):
     store = get_object_or_404(Store, id=store_id)
     now = timezone.now()
     return render(request, 'melted_ice_cream_report.html', locals())
-```
+``` 
 
-### chapter_08_example_13.py
+
+#### chapter_08_example_13.py 
 
 ```python
 def ice_cream_store_display(request, store_id):
@@ -1203,11 +1292,12 @@ def ice_cream_store_display(request, store_id):
             'now': timezone.now()
         }
     )
-```
+``` 
 
-# Chapter 9: Best Practices for Function-Based Views
+## Chapter 9: Best Practices for Function-Based Views
 
-### chapter_09_example_01.py
+
+#### chapter_09_example_01.py 
 
 ```python
 from django.core.exceptions import PermissionDenied
@@ -1218,9 +1308,10 @@ def check_sprinkle_rights(request):
 
     # Return a HTTP 403 back to the user
     raise PermissionDenied
-```
+``` 
 
-### chapter_09_example_02.py
+
+#### chapter_09_example_02.py 
 
 ```python
 from django.core.exceptions import PermissionDenied
@@ -1237,9 +1328,10 @@ def check_sprinkles(request):
 
     # Return a HTTP 403 back to the user
     raise PermissionDenied
-```
+``` 
 
-### chapter_09_example_03.py
+
+#### chapter_09_example_03.py 
 
 ```python
 # sprinkles/views.py
@@ -1276,9 +1368,10 @@ def sprinkle_preview(request):
     return render(request,
         "sprinkles/sprinkle_preview.html",
         {"sprinkle": sprinkle})
-```
+``` 
 
-### chapter_09_example_04.py
+
+#### chapter_09_example_04.py 
 
 ```python
 from django.views.generic import DetailView
@@ -1295,9 +1388,10 @@ class SprinkleDetail(DetailView):
         request = check_sprinkles(request)
         return super(SprinkleDetail, self).dispatch(
                                 request, *args, **kwargs)
-```
+``` 
 
-### chapter_09_example_05.py
+
+#### chapter_09_example_05.py 
 
 ```python
 import functools
@@ -1310,9 +1404,10 @@ def decorator(view_func):
         # You can modify the response (HttpResponse) object here.
         return response
     return new_view_func
-```
+``` 
 
-### chapter_09_example_06.py
+
+#### chapter_09_example_06.py 
 
 ```python
 # sprinkles/decorators.py
@@ -1334,9 +1429,10 @@ def check_sprinkles(view_func):
         # Return the HttpResponse object
         return response
     return new_view_func
-```
+``` 
 
-### chapter_09_example_07.py
+
+#### chapter_09_example_07.py 
 
 ```python
 # sprinkles/views.py
@@ -1354,11 +1450,12 @@ def sprinkle_detail(request, pk):
 
     return render(request, "sprinkles/sprinkle_detail.html",
         {"sprinkle": sprinkle})
-```
+``` 
 
-# Chapter 10: Best Practices for Class-Based Views
+## Chapter 10: Best Practices for Class-Based Views
 
-### chapter_10_example_01.py
+
+#### chapter_10_example_01.py 
 
 ```python
 from django.views.generic import TemplateView
@@ -1373,9 +1470,10 @@ class FreshFruitMixin:
 
 class FruityFlavorView(FreshFruitMixin, TemplateView):
     template_name = "fruity_flavor.html"
-```
+``` 
 
-### chapter_10_example_02.py
+
+#### chapter_10_example_02.py 
 
 ```python
 # flavors/views.py
@@ -1386,9 +1484,10 @@ from .models import Flavor
 
 class FlavorDetailView(LoginRequiredMixin, DetailView):
     model = Flavor
-```
+``` 
 
-### chapter_10_example_03.py
+
+#### chapter_10_example_03.py 
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -1403,9 +1502,10 @@ class FlavorCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         # Do custom logic here
         return super(FlavorCreateView, self).form_valid(form)
-```
+``` 
 
-### chapter_10_example_04.py
+
+#### chapter_10_example_04.py 
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -1419,9 +1519,10 @@ class FlavorCreateView(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
         # Do custom logic here
         return super(FlavorCreateView, self).form_invalid(form)
-```
+``` 
 
-### chapter_10_example_05.py
+
+#### chapter_10_example_05.py 
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -1458,9 +1559,10 @@ class FlavorUpdateView(LoginRequiredMixin, FavoriteMixin, UpdateView):
 
 class FlavorDetailView(LoginRequiredMixin, FavoriteMixin, TemplateView):
     model = Flavor
-```
+``` 
 
-### chapter_10_example_06.html
+
+#### chapter_10_example_06.html 
 
 ```python
 {# flavors/base.html #}
@@ -1472,9 +1574,10 @@ class FlavorDetailView(LoginRequiredMixin, FavoriteMixin, TemplateView):
   <li>Favorites: {{ view.likes_and_favorites.favorites_count }}</li>
 </ul>
 {% endblock likes_and_favorites %}
-```
+``` 
 
-### chapter_10_example_07.py
+
+#### chapter_10_example_07.py 
 
 ```python
 # flavors/models.py
@@ -1487,7 +1590,7 @@ class Flavor(models.Model):
     STATUS_1 = 1
     STATUS_CHOICES=(
         (STATUS_0, 'zero'),
-        (STATUS_1 = 'one'),
+        (STATUS_1, 'one'),
     )
 
     title = models.CharField(max_length=255)
@@ -1497,9 +1600,10 @@ class Flavor(models.Model):
 
     def get_absolute_url(self):
         return reverse("flavors:detail", kwargs={"slug": self.slug})
-```
+``` 
 
-### chapter_10_example_08.py
+
+#### chapter_10_example_08.py 
 
 ```python
 # flavors/views.py
@@ -1518,9 +1622,10 @@ class FlavorUpdateView(LoginRequiredMixin, UpdateView):
 
 class FlavorDetailView(DetailView):
     model = Flavor
-```
+``` 
 
-### chapter_10_example_09.py
+
+#### chapter_10_example_09.py 
 
 ```python
 # flavors/views.py
@@ -1554,9 +1659,10 @@ class FlavorUpdateView(LoginRequiredMixin, FlavorActionMixin,
 
 class FlavorDetailView(DetailView):
     model = Flavor
-```
+``` 
 
-### chapter_10_example_10.html
+
+#### chapter_10_example_10.html 
 
 ```python
 {% if messages %}
@@ -1570,9 +1676,10 @@ class FlavorDetailView(DetailView):
         {% endfor %}
     </ul>
 {% endif %}
-```
+``` 
 
-### chapter_10_example_11.py
+
+#### chapter_10_example_11.py 
 
 ```python
 from django.views.generic import ListView
@@ -1594,9 +1701,10 @@ class FlavorListView(ListView):
         # Return the base queryset
         return queryset
 
-```
+``` 
 
-### chapter_10_example_12.html
+
+#### chapter_10_example_12.html 
 
 ```python
 {# templates/flavors/_flavor_search.html #}
@@ -1607,9 +1715,10 @@ class FlavorListView(ListView):
     <input type="text" name="q" />
     <button type="submit">search</button>
 </form>
-```
+``` 
 
-### chapter_10_example_13.py
+
+#### chapter_10_example_13.py 
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -1637,9 +1746,10 @@ class FlavorView(LoginRequiredMixin, View):
         if form.is_valid():
             form.save()
         return redirect("flavors:detail", flavor.slug)
-```
+``` 
 
-### chapter_10_example_14.py
+
+#### chapter_10_example_14.py 
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -1663,11 +1773,12 @@ class FlavorPDFView(LoginRequiredMixin, View):
         response = make_flavor_pdf(response, flavor)
 
         return response
-```
+``` 
 
-# Chapter 11: Form Fundamentals
+## Chapter 11: Form Fundamentals
 
-### chapter_11_example_01.py
+
+#### chapter_11_example_01.py 
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -1682,9 +1793,10 @@ class FlavorCreateView(LoginRequiredMixin, CreateView):
 class FlavorUpdateView(LoginRequiredMixin, UpdateView):
     model = Flavor
     fields = ['title', 'slug', 'scoops_remaining']
-```
+``` 
 
-### chapter_11_example_02.py
+
+#### chapter_11_example_02.py 
 
 ```python
 # core/validators.py
@@ -1697,9 +1809,10 @@ def validate_tasty(value):
     if not value.startswith('Tasty'):
         msg = 'Must start with Tasty'
         raise ValidationError(msg)
-```
+``` 
 
-### chapter_11_example_03.py
+
+#### chapter_11_example_03.py 
 
 ```python
 # core/models.py
@@ -1713,9 +1826,10 @@ class TastyTitleAbstractModel(models.Model):
 
     class Meta:
         abstract = True
-```
+``` 
 
-### chapter_11_example_04.py
+
+#### chapter_11_example_04.py 
 
 ```python
 # flavors/models.py
@@ -1730,9 +1844,10 @@ class Flavor(TastyTitleAbstractModel):
 
     def get_absolute_url(self):
         return reverse('flavors:detail', kwargs={'slug': self.slug})
-```
+``` 
 
-### chapter_11_example_05.py
+
+#### chapter_11_example_05.py 
 
 ```python
 # flavors/forms.py
@@ -1749,9 +1864,10 @@ class FlavorForm(forms.ModelForm):
 
     class Meta:
         model = Flavor
-```
+``` 
 
-### chapter_11_example_06.py
+
+#### chapter_11_example_06.py 
 
 ```python
 # flavors/views.py
@@ -1789,9 +1905,10 @@ class FlavorUpdateView(LoginRequiredMixin, FlavorActionMixin,
 
 class FlavorDetailView(DetailView):
     model = Flavor
-```
+``` 
 
-### chapter_11_example_07.py
+
+#### chapter_11_example_07.py 
 
 ```python
 # flavors/forms.py
@@ -1827,9 +1944,10 @@ class IceCreamOrderForm(forms.Form):
             msg = 'Sorry, we are out of that flavor.'
             raise forms.ValidationError(msg)
         return slug
-```
+``` 
 
-### chapter_11_example_08.py
+
+#### chapter_11_example_08.py 
 
 ```python
     # attach this code to the previous example (12.7)
@@ -1845,9 +1963,10 @@ class IceCreamOrderForm(forms.Form):
             msg = 'Your order has too much chocolate.'
             raise forms.ValidationError(msg)
         return cleaned_data
-```
+``` 
 
-### chapter_11_example_09.py
+
+#### chapter_11_example_09.py 
 
 ```python
 # stores/models.py
@@ -1862,9 +1981,10 @@ class IceCreamStore(models.Model):
 
     def get_absolute_url(self):
         return reverse('store_detail', kwargs={'pk': self.pk})
-```
+``` 
 
-### chapter_11_example_10.py
+
+#### chapter_11_example_10.py 
 
 ```python
 # stores/forms.py
@@ -1880,9 +2000,10 @@ class IceCreamStoreUpdateForm(forms.ModelForm):
 
     class Meta:
         model = IceCreamStore
-```
+``` 
 
-### chapter_11_example_11.py
+
+#### chapter_11_example_11.py 
 
 ```python
 # stores/forms.py
@@ -1903,9 +2024,10 @@ class IceCreamStoreUpdateForm(forms.ModelForm):
                             **kwargs)
         self.fields['phone'].required = True
         self.fields['description'].required = True
-```
+``` 
 
-### chapter_11_example_12.py
+
+#### chapter_11_example_12.py 
 
 ```python
 # stores/forms.py
@@ -1931,9 +2053,10 @@ class IceCreamStoreUpdateForm(IceCreamStoreCreateForm):
         # show all the fields!
         fields = ['title', 'block_address', 'phone',
                 'description', ]
-```
+``` 
 
-### chapter_11_example_13.py
+
+#### chapter_11_example_13.py 
 
 ```python
 # stores/views
@@ -1949,9 +2072,10 @@ class IceCreamCreateView(CreateView):
 class IceCreamUpdateView(UpdateView):
     model = IceCreamStore
     form_class = IceCreamStoreUpdateForm
-```
+``` 
 
-### chapter_11_example_14.py
+
+#### chapter_11_example_14.py 
 
 ```python
 # core/views.py
@@ -1968,9 +2092,10 @@ class TitleSearchMixin:
             return queryset.filter(title__icontains=q)
         # No q is specified so we return queryset
         return queryset
-```
+``` 
 
-### chapter_11_example_15.py
+
+#### chapter_11_example_15.py 
 
 ```python
 # add to flavors/views.py
@@ -1981,9 +2106,10 @@ from core.views import TitleSearchMixin
 
 class FlavorListView(TitleSearchMixin, ListView):
     model = Flavor
-```
+``` 
 
-### chapter_11_example_16.py
+
+#### chapter_11_example_16.py 
 
 ```python
 # add to stores/views.py
@@ -1994,9 +2120,10 @@ from core.views import TitleSearchMixin
 
 class IceCreamStoreListView(TitleSearchMixin, ListView):
     model = Store
-```
+``` 
 
-### chapter_11_example_17.html
+
+#### chapter_11_example_17.html 
 
 ```python
 {# form to go into stores/store_list.html template #}
@@ -2004,9 +2131,10 @@ class IceCreamStoreListView(TitleSearchMixin, ListView):
     <input type="text" name="q" />
     <button type="submit">search</button>
 </form>
-```
+``` 
 
-### chapter_11_example_18.html
+
+#### chapter_11_example_18.html 
 
 ```python
 {# form to go into flavors/flavor_list.html template #}
@@ -2014,11 +2142,12 @@ class IceCreamStoreListView(TitleSearchMixin, ListView):
     <input type="text" name="q" />
     <button type="submit">search</button>
 </form>
-```
+``` 
 
-# Chapter 12: Common Patterns for Forms
+## Chapter 12: Common Patterns for Forms
 
-### chapter_12_example_01.py
+
+#### chapter_12_example_01.py 
 
 ```python
 import csv
@@ -2038,9 +2167,10 @@ def add_csv_purchases(rows):
         Purchase.objects.create(**row)
         records_added += 1
     return records_added
-```
+``` 
 
-### chapter_12_example_02.py
+
+#### chapter_12_example_02.py 
 
 ```python
 import csv
@@ -2089,15 +2219,17 @@ def add_csv_purchases(rows):
 
     return records_added, errors
 
-```
+``` 
 
-### chapter_12_example_03.html
+
+#### chapter_12_example_03.html 
 
 ```python
 <form action="{% url 'flavor_add' %}" method="POST">
-```
+``` 
 
-### chapter_12_example_04.py
+
+#### chapter_12_example_04.py 
 
 ```python
 from django import forms
@@ -2113,9 +2245,10 @@ class TasterForm(forms.ModelForm):
         # set the user as an attribute of the form
         self.user = kwargs.pop('user')
         super(TasterForm, self).__init__(*args, **kwargs)
-```
+``` 
 
-### chapter_12_example_05.py
+
+#### chapter_12_example_05.py 
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -2136,9 +2269,10 @@ class TasterUpdateView(LoginRequiredMixin, UpdateView):
         # Update the kwargs with the user_id
         kwargs['user'] = self.request.user
         return kwargs
-```
+``` 
 
-### chapter_12_example_06.py
+
+#### chapter_12_example_06.py 
 
 ```python
 # core/models.py
@@ -2147,9 +2281,10 @@ from django.db import models
 class ModelFormFailureHistory(models.Model):
     form_data = models.TextField()
     model_data = models.TextField()
-```
+``` 
 
-### chapter_12_example_07.py
+
+#### chapter_12_example_07.py 
 
 ```python
 # flavors/views.py
@@ -2184,9 +2319,10 @@ class FlavorActionMixin:
         return super(FlavorActionMixin,
                     self).form_invalid(form)
 
-```
+``` 
 
-### chapter_12_example_08.py
+
+#### chapter_12_example_08.py 
 
 ```python
 from django import forms
@@ -2208,9 +2344,10 @@ class IceCreamReviewForm(forms.Form):
 
         # Always return the full collection of cleaned data.
         return cleaned_data
-```
+``` 
 
-### chapter_12_example_09.py
+
+#### chapter_12_example_09.py 
 
 ```python
 # settings.py
@@ -2221,9 +2358,10 @@ INSTALLED_APPS = [
     'django.forms',
     ...
 ]
-```
+``` 
 
-### chapter_12_example_10.py
+
+#### chapter_12_example_10.py 
 
 ```python
 # flavors/widgets.py
@@ -2238,11 +2376,12 @@ class IceCreamFlavorInput(TextInput):
         if not value.strip().lower().endswith('ice cream'):
             context['widget']['value'] = '{} Ice Cream'.format(value)
         return context
-```
+``` 
 
-# Chapter 13: Templates: Best Practices
+## Chapter 13: Templates: Best Practices
 
-### chapter_13_example_01.txt
+
+#### chapter_13_example_01.txt 
 
 ```python
 templates/
@@ -2250,9 +2389,10 @@ templates/
 ├── ... (other sitewide templates in here)
 ├── freezers/
 │   ├── ("freezers" app templates in here)
-```
+``` 
 
-### chapter_13_example_02.txt
+
+#### chapter_13_example_02.txt 
 
 ```python
 freezers/
@@ -2262,9 +2402,10 @@ freezers/
 templates/
 ├── base.html
 ├── ... (other sitewide templates in here)
-```
+``` 
 
-### chapter_13_example_03.txt
+
+#### chapter_13_example_03.txt 
 
 ```python
 templates/
@@ -2273,9 +2414,10 @@ templates/
 ├── profiles/
 │   ├── profile_detail.html # extends base.html
 │   ├── profile_form.html # extends base.html
-```
+``` 
 
-### chapter_13_example_04.txt
+
+#### chapter_13_example_04.txt 
 
 ```python
 templates/
@@ -2285,9 +2427,10 @@ templates/
         base_profiles.html # extends base.html
         profile_detail.html # extends base_profiles.html
         profile_form.html # extends base_profiles.html
-```
+``` 
 
-### chapter_13_example_05.py
+
+#### chapter_13_example_05.py 
 
 ```python
 # vouchers/models.py
@@ -2306,9 +2449,10 @@ class Voucher(models.Model):
     redeemed = models.DateTimeField(null=True, default=None)
 
     objects = VoucherManager()
-```
+``` 
 
-### chapter_13_example_06.html
+
+#### chapter_13_example_06.html 
 
 ```python
 {# templates/vouchers/ages.html #}
@@ -2332,9 +2476,10 @@ class Voucher(models.Model):
     </tbody>
 </table>
 {% endblock content %}
-```
+``` 
 
-### chapter_13_example_07.py
+
+#### chapter_13_example_07.py 
 
 ```python
 # vouchers/managers.py
@@ -2359,9 +2504,10 @@ class VoucherManager(models.Manager):
             {'title': '18+', 'count': count}
         )
         return age_brackets
-```
+``` 
 
-### chapter_13_example_08.html
+
+#### chapter_13_example_08.html 
 
 ```python
 <h2>Greenfelds Who Want Ice Cream</h2>
@@ -2383,9 +2529,10 @@ class VoucherManager(models.Manager):
     {% endif %}
 {% endfor %}
 </ul>
-```
+``` 
 
-### chapter_13_example_09.py
+
+#### chapter_13_example_09.py 
 
 ```python
 # vouchers/views.py
@@ -2402,9 +2549,10 @@ class GreenfeldRoyView(TemplateView):
                 Voucher.objects.filter(name__icontains='greenfeld')
         context['roys'] = Voucher.objects.filter(name__icontains='roy')
         return context
-```
+``` 
 
-### chapter_13_example_10.html
+
+#### chapter_13_example_10.html 
 
 ```python
 <h2>Greenfelds Who Want Ice Cream</h2>
@@ -2420,9 +2568,10 @@ class GreenfeldRoyView(TemplateView):
     <li>{{ voucher.name }}</li>
 {% endfor %}
 </ul>
-```
+``` 
 
-### chapter_13_example_11.html
+
+#### chapter_13_example_11.html 
 
 ```python
 {# list generated via User.object.all() #}
@@ -2438,9 +2587,10 @@ class GreenfeldRoyView(TemplateView):
     </li>
 {% endfor %}
 </ul>
-```
+``` 
 
-### chapter_13_example_12.html
+
+#### chapter_13_example_12.html 
 
 ```python
 {% comment %}
@@ -2456,9 +2606,10 @@ List generated via User.object.all().select_related('flavors')
     </li>
 {% endfor %}
 </ul>
-```
+``` 
 
-### chapter_13_example_13.html
+
+#### chapter_13_example_13.html 
 
 ```python
 {% comment %}Don't do this! This code bunches everything
@@ -2469,9 +2620,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
 }}"><a href="{% url 'syrup_detail' syrup.slug %}">{% syrup.title %}
 </a></li>{% endfor %}{% if list_type=='unordered' %}</ul>{% else %}
 </ol>{% endif %}
-```
+``` 
 
-### chapter_13_example_14.html
+
+#### chapter_13_example_14.html 
 
 ```python
 {# Use indentation/comments to ensure code quality #}
@@ -2495,9 +2647,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
 {% else %}
     </ol>
 {% endif %}
-```
+``` 
 
-### chapter_13_example_15.html
+
+#### chapter_13_example_15.html 
 
 ```python
 {# simple base.html #}
@@ -2520,9 +2673,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
     </div>
 </body>
 </html>
-```
+``` 
 
-### chapter_13_example_16.html
+
+#### chapter_13_example_16.html 
 
 ```python
 {% extends "base.html" %}
@@ -2538,9 +2692,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
     <h2>About Audrey and Daniel</h2>
     <p>They enjoy eating ice cream</p>
 {% endblock content %}
-```
+``` 
 
-### chapter_13_example_17.html
+
+#### chapter_13_example_17.html 
 
 ```python
 <html>
@@ -2561,9 +2716,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
     </div>
 </body>
 </html>
-```
+``` 
 
-### chapter_13_example_18.html
+
+#### chapter_13_example_18.html 
 
 ```python
 {% extends "base.html" %}
@@ -2572,9 +2728,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
     <link rel="stylesheet" type="text/css"
         href="{% static 'css/custom.css' %}" />
 {% endblock stylesheets %}
-```
+``` 
 
-### chapter_13_example_19.html
+
+#### chapter_13_example_19.html 
 
 ```python
 {% extends "base.html" %}
@@ -2586,9 +2743,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
         stylesheet block of base.html
     {% endcomment %}
 {% endblock stylesheets %}
-```
+``` 
 
-### chapter_13_example_20.html
+
+#### chapter_13_example_20.html 
 
 ```python
 {% extends "base.html" %}
@@ -2597,9 +2755,10 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
     stylesheets block from the base.html parent, in this case the
     default project.css link.
 {% endcomment %}
-```
+``` 
 
-### chapter_13_example_21.html
+
+#### chapter_13_example_21.html 
 
 ```python
 {# templates/toppings/topping_list.html #}
@@ -2616,21 +2775,24 @@ syrup in syrup_list %}<li class="{{ syrup.temperature_type|roomtemp
    <li>{{ topping }} </li>
 {% endfor %}
 </ol>
-```
+``` 
 
-### chapter_13_example_22.html
+
+#### chapter_13_example_22.html 
 
 ```python
 <a href="/flavors/">
-```
+``` 
 
-### chapter_13_example_23.html
+
+#### chapter_13_example_23.html 
 
 ```python
 <a href="{% url 'flavors:list' %}">
-```
+``` 
 
-### chapter_13_example_24.py
+
+#### chapter_13_example_24.py 
 
 ```python
 # settings/local.py
@@ -2642,19 +2804,21 @@ TEMPLATES = [
             'string_if_invalid': 'INVALID EXPRESSION: %s'
     },
 ]
-```
+``` 
 
-# Chapter 14: Template Tags and Filters
+## Chapter 14: Template Tags and Filters
 
-### chapter_14_example_01.html
+
+#### chapter_14_example_01.html 
 
 ```python
 {% extends "base.html" %}
 
 {% load flavors_tags %}
-```
+``` 
 
-### chapter_14_example_02.py
+
+#### chapter_14_example_02.py 
 
 ```python
 # settings/base.py
@@ -2666,19 +2830,21 @@ TEMPLATES = [
         'builtins': ['flavors.templatetags.flavors_tags'],
     },
 ]
-```
+``` 
 
-# Chapter 15: Django Templates and Jinja2
+## Chapter 15: Django Templates and Jinja2
 
-### chapter_15_example_01.html
+
+#### chapter_15_example_01.html 
 
 ```python
 <div style="display:none">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 </div>
-```
+``` 
 
-### chapter_15_example_02.py
+
+#### chapter_15_example_02.py 
 
 ```python
 # core/jinja2.py
@@ -2696,9 +2862,10 @@ def environment(**options):
         'dj': defaultfilters
     })
     return env
-```
+``` 
 
-### chapter_15_example_03.html
+
+#### chapter_15_example_03.html 
 
 ```python
 <table><tbody>
@@ -2712,9 +2879,10 @@ def environment(**options):
     <tr>{{ dj.floatformat(purchase.amount, 2) }}</tr>
 {% endfor %}
 </tbody></table>
-```
+``` 
 
-### chapter_15_example_04.py
+
+#### chapter_15_example_04.py 
 
 ```python
 # core/mixins.py
@@ -2722,9 +2890,10 @@ from django.template import defaultfilters
 
 class DjFilterMixin:
     dj = defaultfilters
-```
+``` 
 
-### chapter_15_example_05.html
+
+#### chapter_15_example_05.html 
 
 ```python
 <table><tbody>
@@ -2739,9 +2908,10 @@ class DjFilterMixin:
     <tr>{{ view.dj.floatformat(purchase.amount, 2) }}</tr>
 {% endfor %}
 </tbody></table>
-```
+``` 
 
-### chapter_15_example_06.py
+
+#### chapter_15_example_06.py 
 
 ```python
 # core/jinja2.py
@@ -2762,11 +2932,12 @@ def environment(**options):
         'random': lambda: random.randint(1, 5),
     })
     return env
-```
+``` 
 
-# Chapter 16: Building REST APIs with Django REST Framework (NEW)
+## Chapter 16: Building REST APIs with Django REST Framework (NEW)
 
-### chapter_16_example_01.py
+
+#### chapter_16_example_01.py 
 
 ```python
 REST_FRAMEWORK = {
@@ -2774,9 +2945,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ),
 }
-```
+``` 
 
-### chapter_16_example_02.py
+
+#### chapter_16_example_02.py 
 
 ```python
 # flavors/models.py
@@ -2796,9 +2968,10 @@ class Flavor(models.Model):
 
     def get_absolute_url(self):
         return reverse('flavors:detail', kwargs={'slug': self.slug})
-```
+``` 
 
-### chapter_16_example_03.py
+
+#### chapter_16_example_03.py 
 
 ```python
 # flavors/api/serializers.py
@@ -2810,9 +2983,10 @@ class FlavorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flavor
         fields = ['title', 'slug', 'uuid', 'scoops_remaining']
-```
+``` 
 
-### chapter_16_example_04.py
+
+#### chapter_16_example_04.py 
 
 ```python
 # flavors/api/views.py
@@ -2836,9 +3010,10 @@ class FlavorRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = FlavorSerializer
     lookup_field = 'uuid'  # Don't use Flavor.id!
-```
+``` 
 
-### chapter_16_example_05.py
+
+#### chapter_16_example_05.py 
 
 ```python
 # flavors/urls.py
@@ -2860,16 +3035,18 @@ urlpatterns = [
         name='flavor_rest_api'
     )
 ]
-```
+``` 
 
-### chapter_16_example_06.txt
+
+#### chapter_16_example_06.txt 
 
 ```python
 flavors/api/
 flavors/api/:uuid/
-```
+``` 
 
-### chapter_16_example_07.txt
+
+#### chapter_16_example_07.txt 
 
 ```python
 flavors/
@@ -2883,9 +3060,10 @@ flavors/
 │   ├── validators.py
 │   ├── views.py
 │   ├── viewsets.py
-```
+``` 
 
-### chapter_16_example_08.txt
+
+#### chapter_16_example_08.txt 
 
 ```python
   flavors/
@@ -2896,18 +3074,20 @@ flavors/
   │   │   ├── __init__.py
   │   │   ├── flavor.py
   │   │   ├── ingredient.py
-```
+``` 
 
-### chapter_16_example_09.txt
+
+#### chapter_16_example_09.txt 
 
 ```python
 api/flavors/ # GET, POST
 api/flavors/:uuid/ # GET, PUT, DELETE
 api/users/ # GET, POST
 api/users/:uuid/ # GET, PUT, DELETE
-```
+``` 
 
-### chapter_16_example_10.py
+
+#### chapter_16_example_10.py 
 
 ```python
 # core/api_urls.py
@@ -2946,9 +3126,10 @@ urlpatterns = [
     ),
 ]
 
-```
+``` 
 
-### chapter_16_example_11.py
+
+#### chapter_16_example_11.py 
 
 ```python
 # sundaes/api/views.py
@@ -2983,9 +3164,10 @@ class PourSyrupOnSundaeView(APIView):
         sundae = get_object_or_404(Sundae, uuid=request.data['uuid'])
         syrups = [SyrupSerializer(x).data for x in sundae.syrup_set.all()]
         return Response(syrups)
-```
+``` 
 
-### chapter_16_example_12.txt
+
+#### chapter_16_example_12.txt 
 
 ```python
 /sundae/  # GET, POST
@@ -2993,18 +3175,20 @@ class PourSyrupOnSundaeView(APIView):
 /sundae/:uuid/syrup/  # GET, POST
 /syrup/  # GET, POST
 /syrup/:uuid/  # PUT, DELETE
-```
+``` 
 
-### chapter_16_example_13.txt
+
+#### chapter_16_example_13.txt 
 
 ```python
 /api/cones/  # GET, POST
 /api/cones/:uuid/  # PUT, DELETE
 /api/scoops/  # GET, POST
 /api/scoops/:uuid/  # PUT, DELETE
-```
+``` 
 
-### chapter_16_example_14.txt
+
+#### chapter_16_example_14.txt 
 
 ```python
 /api/cones/  # GET, POST
@@ -3013,9 +3197,10 @@ class PourSyrupOnSundaeView(APIView):
 /api/cones/:uuid/scoops/:uuid/  # PUT, DELETE
 /api/scoops/  # GET, POST
 /api/scoops/:uuid/  # PUT, DELETE
-```
+``` 
 
-### chapter_16_example_15.py
+
+#### chapter_16_example_15.py 
 
 ```python
 # core/apiv1_shutdown.py
@@ -3037,11 +3222,12 @@ apiv1_gone_msg = """APIv2 was removed on April 2, 2017. Please switch to APIv3:
 
 def apiv1_gone(request):
     return HttpResponseGone(apiv1_gone_msg)
-```
+``` 
 
-# Chapter 17: Consuming REST APIs
+## Chapter 17: Consuming REST APIs
 
-### chapter_17_example_01.html
+
+#### chapter_17_example_01.html 
 
 ```python
 <html>
@@ -3049,9 +3235,10 @@ def apiv1_gone(request):
       be in a form as the input element is hidden -->
 {% csrf_token %}
 </html>
-```
+``` 
 
-### chapter_17_example_02.txt
+
+#### chapter_17_example_02.txt 
 
 ```python
 var csrfToken = $('[name=csrfmiddlewaretoken]').val();
@@ -3064,11 +3251,12 @@ $.ajax({
   data: formData,
   type: 'POST'
 })
-```
+``` 
 
-# Chapter 19: Working With the Django Admin
+## Chapter 19: Working With the Django Admin
 
-### chapter_19_example_01.py
+
+#### chapter_19_example_01.py 
 
 ```python
 from django.db import models
@@ -3083,17 +3271,19 @@ class IceCreamBar(models.Model):
 
     def __str__(self):
         return self.name
-```
+``` 
 
-### chapter_19_example_02.py
+
+#### chapter_19_example_02.py 
 
 ```python
 >>> IceCreamBar.objects.all()
 [<IceCreamBar: Vanilla Crisp>, <IceCreamBar: Mint Cookie Crunch>,
 <IceCreamBar: Strawberry Pie>]
-```
+``` 
 
-### chapter_19_example_03.py
+
+#### chapter_19_example_03.py 
 
 ```python
 from django.contrib import admin
@@ -3103,9 +3293,10 @@ from .models import IceCreamBar
 @admin.register(IceCreamBar)
 class IceCreamBarModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'shell', 'filling')
-```
+``` 
 
-### chapter_19_example_04.py
+
+#### chapter_19_example_04.py 
 
 ```python
   # icecreambars/admin.py
@@ -3129,11 +3320,12 @@ class IceCreamBarModelAdmin(admin.ModelAdmin):
       # Displays HTML tags
       # Never set allow_tags to True against user submitted data!!!
       show_url.allow_tags = True
-```
+``` 
 
-# Chapter 20: Dealing with the User Model
+## Chapter 20: Dealing with the User Model
 
-### chapter_20_example_01.py
+
+#### chapter_20_example_01.py 
 
 ```python
 # Stock user model definition
@@ -3145,9 +3337,10 @@ class IceCreamBarModelAdmin(admin.ModelAdmin):
 >>> from django.contrib.auth import get_user_model
 >>> get_user_model()
 <class profiles.models.UserProfile>
-```
+``` 
 
-### chapter_20_example_02.py
+
+#### chapter_20_example_02.py 
 
 ```python
 from django.conf import settings
@@ -3157,9 +3350,10 @@ class IceCreamStore(models.Model):
 
     owner = models.OneToOneField(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=255)
-```
+``` 
 
-### chapter_20_example_03.py
+
+#### chapter_20_example_03.py 
 
 ```python
 # DON'T DO THIS!
@@ -3171,9 +3365,10 @@ class IceCreamStore(models.Model):
     # This following line tends to create import loops.
     owner = models.OneToOneField(get_user_model())
     title = models.CharField(max_length=255)
-```
+``` 
 
-### chapter_20_example_04.py
+
+#### chapter_20_example_04.py 
 
 ```python
 # profiles/models.py
@@ -3184,15 +3379,17 @@ class KarmaUser(AbstractUser):
     karma = models.PositiveIntegerField(verbose_name='karma',
                                             default=0,
                                             blank=True)
-```
+``` 
 
-### chapter_20_example_05.py
+
+#### chapter_20_example_05.py 
 
 ```python
 AUTH_USER_MODEL = 'profiles.KarmaUser'
-```
+``` 
 
-### chapter_20_example_06.py
+
+#### chapter_20_example_06.py 
 
 ```python
 # profiles/models.py
@@ -3221,27 +3418,30 @@ class InventorProfile(models.Model):
     flavors_invented = models.ManyToManyField(Flavor, null=True, blank=True)
 
 
-```
+``` 
 
-# Chapter 21: Django's Secret Sauce: Third-Party Packages
+## Chapter 21: Django's Secret Sauce: Third-Party Packages
 
-### chapter_21_example_01.txt
+
+#### chapter_21_example_01.txt 
 
 ```python
 Django==1.11
 coverage==4.3.4
 django-extensions==1.7.6
 django-braces==1.11
-```
+``` 
 
-### chapter_21_example_02.txt
+
+#### chapter_21_example_02.txt 
 
 ```python
 
 -e git+https://github.com/erly-adptr/py-junk.git#egg=py-jnk
-```
+``` 
 
-### chapter_21_example_03.txt
+
+#### chapter_21_example_03.txt 
 
 ```python
 # DON'T DO THIS!
@@ -3249,9 +3449,10 @@ django-braces==1.11
 
 Django==1.10.2
 requests==1.2.3
-```
+``` 
 
-### chapter_21_example_04.txt
+
+#### chapter_21_example_04.txt 
 
 ```python
 # requirements.txt for the mythical web site 'icecreamratings.com'
@@ -3261,18 +3462,20 @@ django−blarg==1.0
 
 # Note that unlike the django−blarg library , we explicitly pin
 # the requirements so we have total control over the environment
-```
+``` 
 
-### chapter_21_example_05.txt
+
+#### chapter_21_example_05.txt 
 
 ```python
 # requirements for django-blarg
 
 Django>=1.10,<1.12
 requests>=2.6.0,<=2.13.0
-```
+``` 
 
-### chapter_21_example_06.txt
+
+#### chapter_21_example_06.txt 
 
 ```python
 # Only if you haven't installed cookiecutter yet
@@ -3283,41 +3486,46 @@ $ cookiecutter https://github.com/pydanny/cookiecutter-djangopackage.git
 
 # Creating a Python Package from scratch
 $ cookiecutter https://github.com/audreyr/cookiecutter-pypackage.git
-```
+``` 
 
-### chapter_21_example_07.txt
+
+#### chapter_21_example_07.txt 
 
 ```python
 $ pip install twine
 $ python setup.py sdist
 $ twine upload dist/*
 
-```
+``` 
 
-### chapter_21_example_08.txt
+
+#### chapter_21_example_08.txt 
 
 ```python
 $ pip install wheel
-```
+``` 
 
-### chapter_21_example_09.txt
+
+#### chapter_21_example_09.txt 
 
 ```python
 $ python setup.py bdist_wheel
 $ twine upload dist/*
-```
+``` 
 
-### chapter_21_example_10.txt
+
+#### chapter_21_example_10.txt 
 
 ```python
 # setup.cfg
 [wheel]
 universal = 1
-```
+``` 
 
-# Chapter 22: Testing Chapter of Doom!
+## Chapter 22: Testing Chapter of Doom!
 
-### chapter_22_example_01.txt
+
+#### chapter_22_example_01.txt 
 
 ```python
 popsicles/
@@ -3331,9 +3539,10 @@ popsicles/
         test_models.py
         test_views.py
     views.py
-```
+``` 
 
-### chapter_22_example_02.py
+
+#### chapter_22_example_02.py 
 
 ```python
 # flavors/tests/test_api.py
@@ -3355,9 +3564,10 @@ class FlavorAPITests(TestCase):
         self.assertEquals(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEquals(len(data), 1)
-```
+``` 
 
-### chapter_22_example_03.py
+
+#### chapter_22_example_03.py 
 
 ```python
 # flavors/tests/test_api.py
@@ -3406,9 +3616,10 @@ class DjangoRestFrameworkTests(TestCase):
         response = self.client.delete(self.read_update_delete_url)
         self.assertEquals(response.status_code, 204)
         self.assertEquals(Flavor.objects.count(), 1)
-```
+``` 
 
-### chapter_22_example_04.py
+
+#### chapter_22_example_04.py 
 
 ```python
 from django.contrib.auth.models import AnonymousUser
@@ -3443,9 +3654,10 @@ class SavoryIceCreamTest(TestCase):
         # process and test the request
         response = cheese_flavors(request)
         self.assertContains(response, 'bleah!')
-```
+``` 
 
-### chapter_22_example_05.py
+
+#### chapter_22_example_05.py 
 
 ```python
 from unittest import mock, TestCase
@@ -3474,9 +3686,10 @@ class TestIceCreamSorting(TestCase):
             ['chocolate', 'strawberry', 'vanilla', ]
 
         )
-```
+``` 
 
-### chapter_22_example_06.py
+
+#### chapter_22_example_06.py 
 
 ```python
     @mock.patch.object(icecreamapi, 'get_flavors')
@@ -3488,9 +3701,10 @@ class TestIceCreamSorting(TestCase):
         #   and passes on a CantListFlavors exception.
         with self.assertRaises(CantListFlavors):
             list_flavors_sorted()
-```
+``` 
 
-### chapter_22_example_07.py
+
+#### chapter_22_example_07.py 
 
 ```python
     @mock.patch.object(requests, 'get')
@@ -3508,15 +3722,17 @@ class TestIceCreamSorting(TestCase):
 
         with self.assertRaises(CantListFlavors):
             list_flavors_sorted()
-```
+``` 
 
-### chapter_22_example_08.txt
+
+#### chapter_22_example_08.txt 
 
 ```python
 $ coverage run manage.py test --settings=twoscoops.settings.test
-```
+``` 
 
-### chapter_22_example_09.txt
+
+#### chapter_22_example_09.txt 
 
 ```python
 Creating test database for alias "default"...
@@ -3527,15 +3743,17 @@ Ran 2 tests in 0.008s
 OK
 
 Destroying test database for alias "default"...
-```
+``` 
 
-### chapter_22_example_10.txt
+
+#### chapter_22_example_10.txt 
 
 ```python
 $ coverage html --omit="admin.py"
-```
+``` 
 
-### chapter_22_example_11.py
+
+#### chapter_22_example_11.py 
 
 ```python
 # test_models.py
@@ -3549,11 +3767,12 @@ def test_good_choice():
 def test_bad_cone_choice():
     with raises(Cone.DoesNotExist):
         Cone.objects.get(type='spaghetti')
-```
+``` 
 
-# Chapter 23: Documentation: Be Obsessed
+## Chapter 23: Documentation: Be Obsessed
 
-### chapter_23_example_01.txt
+
+#### chapter_23_example_01.txt 
 
 ```python
 Section Header
@@ -3606,9 +3825,10 @@ code-block:: javascript
 
     console.log("Don't use alert()");
 
-```
+``` 
 
-### chapter_23_example_02.py
+
+#### chapter_23_example_02.py 
 
 ```python
 # setup.py
@@ -3618,24 +3838,27 @@ import sys
 if sys.argv[-1] == 'md2rst':
     subprocess.call('pandoc README.md -o README.rst', shell=True)
 ...
-```
+``` 
 
-# Chapter 26: Logging: What's It For, Anyway?
+## Chapter 26: Security Best Practices
 
-### chapter_26_example_01.py
+
+#### chapter_26_example_01.py 
 
 ```python
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-```
+``` 
 
-### chapter_26_example_02.txt
+
+#### chapter_26_example_02.txt 
 
 ```python
 Strict-Transport-Security: max-age=31536000; includeSubDomains
-```
+``` 
 
-### chapter_26_example_03.py
+
+#### chapter_26_example_03.py 
 
 ```python
 from django import forms
@@ -3643,9 +3866,10 @@ from django import forms
 class SpecialForm(forms.Form):
     my_secret = forms.CharField(
             widget=forms.TextInput(attrs={'autocomplete': 'off'}))
-```
+``` 
 
-### chapter_26_example_04.py
+
+#### chapter_26_example_04.py 
 
 ```python
 from django import forms
@@ -3653,9 +3877,10 @@ from django import forms
 class SecretInPublicForm(forms.Form):
 
     my_secret = forms.CharField(widget=forms.PasswordInput())
-```
+``` 
 
-### chapter_26_example_05.py
+
+#### chapter_26_example_05.py 
 
 ```python
 # stores/models.py
@@ -3667,9 +3892,10 @@ class Store(models.Model):
     slug = models.SlugField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     # Assume 10 more fields that cover address and contact info.
-```
+``` 
 
-### chapter_26_example_06.py
+
+#### chapter_26_example_06.py 
 
 ```python
 # DON'T DO THIS!
@@ -3684,9 +3910,10 @@ class StoreForm(forms.ModelForm):
         # DON'T DO THIS: Implicit definition of fields.
         #                Too easy to make mistakes!
         excludes = ("pk", "slug", "modified", "created", "owner")
-```
+``` 
 
-### chapter_26_example_07.py
+
+#### chapter_26_example_07.py 
 
 ```python
 from django import forms
@@ -3702,9 +3929,10 @@ class StoreForm(forms.ModelForm):
             "title", "address_1", "address_2", "email",
             "usstate", "postal_code", "city",
         )
-```
+``` 
 
-### chapter_26_example_08.py
+
+#### chapter_26_example_08.py 
 
 ```python
 # stores/models.py
@@ -3717,9 +3945,10 @@ class Store(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     co_owners = models.ManyToManyField(settings.AUTH_USER_MODEL)
     # Assume 10 more fields that cover address and contact info.
-```
+``` 
 
-### chapter_26_example_09.py
+
+#### chapter_26_example_09.py 
 
 ```python
 import uuid as uuid_lib
@@ -3733,9 +3962,10 @@ class IceCreamPayment(models.Model):
 
     def __str__(self):
         return str(self.pk)
-```
+``` 
 
-### chapter_26_example_10.py
+
+#### chapter_26_example_10.py 
 
 ```python
 >>> from payments import IceCreamPayment
@@ -3746,11 +3976,12 @@ class IceCreamPayment(models.Model):
 UUID('0b0fb68e-5b06-44af-845a-01b6df5e0967')
 >>> IceCreamPayment.objects.get(uuid=payment.uuid)
 <IceCreamPayment: 1>
-```
+``` 
 
-# Chapter 27: Signals: Use Cases and Avoidance Techniques
+## Chapter 27: Logging: What's It For, Anyway?
 
-### chapter_27_example_01.py
+
+#### chapter_27_example_01.py 
 
 ```python
 # Taken directly from core Django code.
@@ -3763,9 +3994,10 @@ logger.error('Internal Server Error: %s', request.path,
         'request': request
     }
 )
-```
+``` 
 
-### chapter_27_example_02.py
+
+#### chapter_27_example_02.py 
 
 ```python
 # Taken directly from core Django code.
@@ -3778,9 +4010,10 @@ logger.warning('Forbidden (%s): %s',
         'request': request,
     }
 )
-```
+``` 
 
-### chapter_27_example_03.py
+
+#### chapter_27_example_03.py 
 
 ```python
 from django.views.generic import TemplateView
@@ -3795,9 +4028,10 @@ class PintView(TemplateView):
         print('Only %d pints of ice cream left.' % (pints_remaining))
         return context
 
-```
+``` 
 
-### chapter_27_example_04.py
+
+#### chapter_27_example_04.py 
 
 ```python
 import logging
@@ -3815,9 +4049,10 @@ class PintView(TemplateView):
         pints_remaining = pint_counter()
         logger.debug('Only %d pints of ice cream left.' % pints_remaining)
         return context
-```
+``` 
 
-### chapter_27_example_05.py
+
+#### chapter_27_example_05.py 
 
 ```python
 import logging
@@ -3833,9 +4068,10 @@ def get_additional_data():
         logger.debug('Could not get additional data', exc_info=True)
         return None
     return r
-```
+``` 
 
-### chapter_27_example_06.py
+
+#### chapter_27_example_06.py 
 
 ```python
 # You can place this snippet at the top
@@ -3844,11 +4080,10 @@ def get_additional_data():
 import logging
 
 logger = logging.getLogger(__name__)
-```
+``` 
 
-# Chapter 28: What About Those Random Utilities?
 
-### chapter_28_example_01.py
+#### chapter_28_example_01.py 
 
 ```python
 # events/managers.py
@@ -3865,9 +4100,10 @@ class EventManager(models.Manager):
         event.notify_admins()
         return event
 
-```
+``` 
 
-### chapter_28_example_02.py
+
+#### chapter_28_example_02.py 
 
 ```python
 # events/models.py
@@ -3909,9 +4145,10 @@ END: {end}""".format(title=self.title, start=self.start,
         mail_admins(subject=subject,
             message=message,
             fail_silently=False)
-```
+``` 
 
-### chapter_28_example_03.txt
+
+#### chapter_28_example_03.txt 
 
 ```python
 >>> from django.contrib.auth import get_user_model
@@ -3925,11 +4162,12 @@ END: {end}""".format(title=self.title, start=self.start,
 ...     end=now,
 ...     user=user
 ...     )
-```
+``` 
 
-# Chapter 29: Deployment: Platforms as a Service
+## Chapter 29: Signals: Use Cases and Avoidance Techniques
 
-### chapter_29_example_01.txt
+
+#### chapter_29_example_01.txt 
 
 ```python
 core/
@@ -3937,31 +4175,35 @@ core/
     managers.py  # contains the custom model manager(s)
     models.py
     views.py  # Contains the custom view mixin(s)
-```
+``` 
 
-### chapter_29_example_02.py
+
+#### chapter_29_example_02.py 
 
 ```python
 from core.managers import PublishedManager
 from core.views import IceCreamMixin
-```
+``` 
 
-### chapter_29_example_03.py
+
+#### chapter_29_example_03.py 
 
 ```python
 >>> from django.utils.text import slugify
 >>> slugify('straße') # German
 'strae'
-```
+``` 
 
-### chapter_29_example_04.py
+
+#### chapter_29_example_04.py 
 
 ```python
 >>> slugify('straße', allow_unicode=True) # Again with German
 'straße'
-```
+``` 
 
-### chapter_29_example_05.py
+
+#### chapter_29_example_05.py 
 
 ```python
 # core/utils.py
@@ -3977,9 +4219,10 @@ def generic_load_tool(model, pk):
         return BorkedObject()
     instance.loaded = True
     return instance
-```
+``` 
 
-### chapter_29_example_06.py
+
+#### chapter_29_example_06.py 
 
 ```python
 # core/utils.py
@@ -3994,9 +4237,10 @@ def get_object_or_403(model, **kwargs):
         raise PermissionDenied
     except MultipleObjectsReturned:
         raise PermissionDenied
-```
+``` 
 
-### chapter_29_example_07.py
+
+#### chapter_29_example_07.py 
 
 ```python
 # stores/calc.py
@@ -4008,9 +4252,10 @@ def finance_data_adjudication(store, sales, issues):
         raise PermissionDenied(msg)
 
     # Continue on to perform other logic.
-```
+``` 
 
-### chapter_29_example_08.py
+
+#### chapter_29_example_08.py 
 
 ```python
 # urls.py
@@ -4018,9 +4263,10 @@ def finance_data_adjudication(store, sales, issues):
 # This demonstrates the use of a custom permission denied view. The default
 # view is django.views.defaults.permission_denied
 handler403 = 'core.views.permission_denied_view'
-```
+``` 
 
-### chapter_29_example_09.py
+
+#### chapter_29_example_09.py 
 
 ```python
 # serializer_example.py
@@ -4044,9 +4290,10 @@ serialized_data = serializer.serialize(favs)
 with open('data.json', 'w') as f:
     f.write(serialized_data)
 
-```
+``` 
 
-### chapter_29_example_10.py
+
+#### chapter_29_example_10.py 
 
 ```python
 # deserializer_example.py
@@ -4081,9 +4328,10 @@ for element in python_data:
         element.object.created
     )
 
-```
+``` 
 
-### chapter_29_example_11.py
+
+#### chapter_29_example_11.py 
 
 ```python
 # json_encoding_example.py
@@ -4099,11 +4347,12 @@ data = {'date': timezone.now()}
 json_data = json.dumps(data, cls=DjangoJSONEncoder)
 
 print(json_data)
-```
+``` 
 
-# Chapter 33: Where and How to Ask Django Questions
+## Chapter 33: Continuous Integration
 
-### chapter_33_example_01.txt
+
+#### chapter_33_example_01.txt 
 
 ```python
 twoscoopspress$ python discounts/manage.py runserver 8001
@@ -4119,30 +4368,34 @@ Traceback (most recent call last):
         line 145, in inner
     return func(*args, **kwargs)
 TypeError: __init__() takes exactly 1 argument (2 given)
-```
+``` 
 
-### chapter_33_example_02.py
+
+#### chapter_33_example_02.py 
 
 ```python
 # Forgetting the 'as_view()' method
 url(r'^$',  HomePageView, name='home'),
-```
+``` 
 
-### chapter_33_example_03.py
+
+#### chapter_33_example_03.py 
 
 ```python
 url(r'^$',  HomePageView.as_view(), name='home'),
-```
+``` 
 
-### chapter_33_example_04.html
+
+#### chapter_33_example_04.html 
 
 ```python
 <form action="{% url 'stores:file_upload' store.pk %}"
         method="post"
         enctype="multipart/form-data">
-```
+``` 
 
-### chapter_33_example_05.py
+
+#### chapter_33_example_05.py 
 
 ```python
 # stores/views.py
@@ -4165,9 +4418,10 @@ def upload_file(request, pk):
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form, 'store': store})
-```
+``` 
 
-### chapter_33_example_06.py
+
+#### chapter_33_example_06.py 
 
 ```python
 # stores/views.py
@@ -4197,9 +4451,10 @@ class UploadFile(View):
             request,
             'upload.html',
             {'form': form, 'store': store})
-```
+``` 
 
-### chapter_33_example_07.py
+
+#### chapter_33_example_07.py 
 
 ```python
 # core/middleware.py
@@ -4211,9 +4466,10 @@ class UserBasedExceptionMiddleware:
     def process_exception(self, request, exception):
         if request.user.is_superuser:
             return technical_500_response(request, *sys.exc_info())
-```
+``` 
 
-### chapter_33_example_08.py
+
+#### chapter_33_example_08.py 
 
 ```python
 # settings.py
@@ -4221,5 +4477,5 @@ ALLOWED_HOSTS = [
     '.djangopackages.org',
     '.djangopackages.com',
 ]
-```
+``` 
 

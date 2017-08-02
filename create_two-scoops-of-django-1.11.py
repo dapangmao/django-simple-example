@@ -1,6 +1,6 @@
 import os
 import sys
-sys.stdout = open('combine.py','wt')
+sys.stdout = open('two-scoops-of-django-1.11.md','wt')
 all_files = os.listdir("./code")
 
 def get_chapter_titles():
@@ -56,14 +56,14 @@ def write2file(cdict):
         with open(os.path.join("code", file), 'r') as infile:
             id = int(file.split("_")[1])
             if id in cdict and id != pass_id:
-                print("# " + cdict.get(id) + "\n")
-            print('"""{} """\n'.format(file))
+                print("## " + cdict.get(id) + "\n")
+            print('\n#### {} \n\n```python'.format(file))
             for i, l in enumerate(infile):
                 if i > 36:
                     print(l.rstrip())
-            print("\n")
+            print("``` \n")
             pass_id = id
 
-            
+
 cdict = get_chapter_titles()
 write2file(cdict=cdict)
