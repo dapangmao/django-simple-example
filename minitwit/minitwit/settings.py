@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from sys import platform
+import tempfile
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,7 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'blog',
-    'ckeditor'
+    'ckeditor',
+    'ckeditor_uploader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -100,6 +102,17 @@ GOOGLE_RECAPTCHA_SECRET_KEY = '6LfBcSkUAAAAAE7AbseHmOUBwEDoIcwkljzPjm0F'
 
 LOGIN_URL = '/public'
 LOGIN_REDIRECT_URL = ''
+
+
+# Only for ckeditor
+CKEDITOR_UPLOAD_PATH = "uploads/"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(tempfile.gettempdir(), 'ck_media')
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+# New
+IMAGE_QUALITY = 40
+THUMBNAIL_SIZE = (300, 300)
 
 if platform == "darwin":
     DATABASES = {

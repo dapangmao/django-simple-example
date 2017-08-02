@@ -1,5 +1,6 @@
-
 from django.conf.urls import include, url
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from blog import views
 
@@ -11,5 +12,11 @@ urlpatterns = [
     url(r'^login/$', views.Login.as_view(), name='login_view'),
     url(r'^register/$', views.Register.as_view(), name='register'),
     url(r'^user/(?P<username>\w+)/', views.user_timeline, name='user_timeline'),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
+
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
