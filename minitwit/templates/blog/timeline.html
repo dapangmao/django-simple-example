@@ -8,7 +8,7 @@
         {% elif url_name == 'user_timeline' %}
             <h2> {{ profile_user.username }}'s Timeline </h2>
             {% if user.is_authenticated %}
-                <div class="followstatus">
+                <div class="header">
                     {% if user == profile_user %}
                         This is you!
                     {% elif followed %}
@@ -42,15 +42,15 @@
     {% if posts %}
         {% for post in posts %}
             <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
+                <div class="col s12 m7">
+                    <div class="card">
+                        <div class="card-title">
                             <img src="{{ post.author.email|gravatar }}">
                             <strong><a
                                     href="{% url 'user_timeline' post.author.username %}">{{ post.author.username }}
                             </a></strong>
                         </div>
-                        <div class="panel-body">
+                        <div class="card-content">
                             {{ post.text | safe }}
                             <small>&mdash; {{ post.pub_date | datetimeformat }}</small>
                         </div>
@@ -68,23 +68,21 @@
 
 
     <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-            <ul class="pagination pagination-centered">
-                {% if posts.has_previous %}
-                    <li><a href="?page=1"><<</a></li>
-                    <li><a href="?page={{ posts.previous_page_number }}"><</a></li>
-                {% endif %}
+        <ul class="pagination">
+            {% if posts.has_previous %}
+                <li class="waves-effect"><a href="?page=1"><<</a></li>
+                <li class="waves-effect"><a href="?page={{ posts.previous_page_number }}"><</a></li>
+            {% endif %}
 
-                {% for i in posts.paginator.page_range %}
-                    <li {% if posts.number == i %} class="active" {% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
-                {% endfor %}
+            {% for i in posts.paginator.page_range %}
+                <li {% if posts.number == i %} class="active" {% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
 
-                {% if posts.has_next %}
-                    <li><a href="?page={{ posts.next_page_number }}">></a></li>
-                    <li><a href="?page={{ posts.paginator.num_pages }}">>></a></li>
-                {% endif %}
-            </ul>
-        </div>
+            {% if posts.has_next %}
+                <li class="waves-effect"><a href="?page={{ posts.next_page_number }}">></a></li>
+                <li class="waves-effect"><a href="?page={{ posts.paginator.num_pages }}">>></a></li>
+            {% endif %}
+        </ul>
     </div>
 
 

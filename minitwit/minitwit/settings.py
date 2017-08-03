@@ -74,10 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'minitwit.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -98,11 +94,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 
+# Authorize the use of the static files
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LfBcSkUAAAAAE7AbseHmOUBwEDoIcwkljzPjm0F'
 
 LOGIN_URL = '/public'
 LOGIN_REDIRECT_URL = ''
-
 
 # Only for ckeditor
 CKEDITOR_UPLOAD_PATH = "uploads/"

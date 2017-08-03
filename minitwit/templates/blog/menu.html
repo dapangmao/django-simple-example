@@ -1,0 +1,9 @@
+{% if user.is_authenticated %}
+    <li><a href="{% url 'my_timeline' %}">my timeline</a></li>
+    <li><a href="{% url 'public_timeline' %}">public timeline</a></li>
+    <li><a href="{% url 'logout_view' %}">sign out [{{ request.user.username }} ] </a></li>
+{% else %}
+    <li><a href="{% url 'public_timeline' %}">public timeline</a>
+    <li><a href="{% url 'register' %}">sign up</a></li>
+    <li><a href="{% url 'login_view' %}">sign in</a></li>
+{% endif %}
