@@ -71,53 +71,53 @@ def toggle_following(request, username):
     return redirect('user_timeline', username=username)
 
 
-class Login(View):
-    def captcha(self, recaptcha_response):
-        data = {
-            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-            'response': recaptcha_response
-        }
-        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-        return r.json()
-
-    def get(self, request):
-        if request.user.is_authenticated():
-            return redirect('my_timeline')
-        form = LoginForm()
-        return render(request, 'blog/login.html', {'form': form})
-
-    def post(self, request):
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            captcha_res = self.captcha(request.POST.get('g-recaptcha-response'))
-            if not captcha_res['success']:
-                messages.error(request, "Invalid reCaptcha. Please try again")
-                return self.get(request)
-            user = form.login()
-            if user:
-                login(request, user)
-                return redirect('my_timeline')
-        return self.get(request)
-
-
-class Register(View):
-    def get(self, request):
-        if request.user.is_authenticated():
-            return redirect('my_timeline')
-        form = UserForm()
-        return render(request, 'blog/register.html', {'form': form})
-
-    def post(self, request):
-        form = UserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'You were successfully registered and can login now')
-            return redirect('login_view')
-        return self.get(request)
-
-
-@login_required
-def logout_view(request):
-    logout(request)
-    messages.success(request, 'You were logger out')
-    return redirect('public_timeline')
+# class Login(View):
+#     def captcha(self, recaptcha_response):
+#         data = {
+#             'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+#             'response': recaptcha_response
+#         }
+#         r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+#         return r.json()
+#
+#     def get(self, request):
+#         if request.user.is_authenticated():
+#             return redirect('my_timeline')
+#         form = LoginForm()
+#         return render(request, 'blog/login.html', {'form': form})
+#
+#     def post(self, request):
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             captcha_res = self.captcha(request.POST.get('g-recaptcha-response'))
+#             if not captcha_res['success']:
+#                 messages.error(request, "Invalid reCaptcha. Please try again")
+#                 return self.get(request)
+#             user = form.login()
+#             if user:
+#                 login(request, user)
+#                 return redirect('my_timeline')
+#         return self.get(request)
+#
+#
+# class Register(View):
+#     def get(self, request):
+#         if request.user.is_authenticated():
+#             return redirect('my_timeline')
+#         form = UserForm()
+#         return render(request, 'blog/register.html', {'form': form})
+#
+#     def post(self, request):
+#         form = UserForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'You were successfully registered and can login now')
+#             return redirect('login_view')
+#         return self.get(request)
+#
+#
+# @login_required
+# def logout_view(request):
+#     logout(request)
+#     messages.success(request, 'You were logger out')
+#     return redirect('public_timeline')

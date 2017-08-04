@@ -37,10 +37,17 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'blog',
     'ckeditor',
     'ckeditor_uploader',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,6 +81,39 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'minitwit.wsgi.application'
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
+    }
+]
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -102,7 +142,7 @@ STATICFILES_DIRS = (
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LfBcSkUAAAAAE7AbseHmOUBwEDoIcwkljzPjm0F'
 
 LOGIN_URL = '/public'
-LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = '/'
 
 # Only for ckeditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
