@@ -6,36 +6,9 @@
         {% if url_name == 'public_timeline' %}
             <h2> Public Timeline </h2>
         {% elif url_name == 'user_timeline' %}
-            <h2> {{ profile_user.username }}'s Timeline </h2>
-            {% if user.is_authenticated %}
-                <div class="header">
-                    {% if user == profile_user %}
-                        This is you!
-                    {% elif followed %}
-                        You are currently following this user.
-                        <a class="unfollow" href="{% url 'toggle' profile_user.username %}">Unfollow user</a>
-                        .
-                    {% else %}
-                        You are not yet following this user.
-                        <a class="follow" href="{% url 'toggle' profile_user.username %}">Follow user</a>.
-                    {% endif %}
-                </div>
-            {% endif %}
+            {% include 'blog/snippets/usertimeline.html' %}
         {% else %}
-            <h2>My Timeline </h2>
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3">
-                    <div class="form-group">
-                        <label>What's on your mind ?</label>
-                        <form action="{% url 'my_timeline' %}" method="post">
-                            {% csrf_token %}
-                            <p>
-                                <input type="text" name="text" size="60">
-                                <button type="submit" class="btn btn-default">Share</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {% include 'blog/snippets/mytimeline.html' %}
         {% endif %}
     {% endwith %}
 

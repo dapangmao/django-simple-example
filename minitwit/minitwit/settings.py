@@ -26,7 +26,7 @@ SECRET_KEY = '&uqx3rb^g6-_fw#%iz6u@p1*oz0ng6r8gj$una=lb4h(__g3+v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -92,7 +92,7 @@ AUTHENTICATION_BACKENDS = (
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
             'min_length': 9,
         }
@@ -111,7 +111,6 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-
 
 SITE_ID = 1
 
@@ -162,3 +161,12 @@ if platform == "darwin":
             'HOST': "localhost"
         }
     }
+
+# COMPRESS_ENABLED = True
+#
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#     # other finders..
+#     'compressor.finders.CompressorFinder',
+# )

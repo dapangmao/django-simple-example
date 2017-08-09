@@ -8,6 +8,7 @@
 {#<link rel="stylesheet" type="text/css" href="{% static 'blog/bootstrap.min.css' %}">#}
 {#<script src="{% static 'blog/bootstrap.min.js' %}"> </script>#}
 
+
 <script src="{% static 'materialize/materialize.min.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'materialize/materialize.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'minitwit.css' %}">
@@ -17,11 +18,11 @@
         <a href="/" class="brand-logo">MiniTwit</a>
 
         <ul class="right hide-on-med-and-down">
-            {% include "blog/menu.html" %}
+            {% include "blog/snippets/menu.html" %}
         </ul>
 
         <ul id="slide-out" class="side-nav">
-            {% include "blog/menu.html" %}
+            {% include "blog/snippets/menu.html" %}
 
         </ul>
         <a href="#" data-activates="slide-out" class="button-collapse"><b>三</b></a>
