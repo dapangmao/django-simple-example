@@ -1,6 +1,16 @@
 1. Modle layer
   - Django will create 10 additional tables besides the original two tables
-  ![demo](https://github.com/dapangmao/django-simple-example/blob/master/images/Screen%20Shot%202017-07-12%20at%2010.40.17%20AM.png?raw=true)
+  ```
+  class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField("date published")
+
+
+  class Choice(models.Model):
+      question = models.ForeignKey(Question, on_delete=models.CASCADE)
+      choice_text = models.CharField(max_length=200)
+      votes = models.IntegerField(default=0)
+   ```
 
   - Postgres connection
   ```
