@@ -1,3 +1,6 @@
+- The raw data
+
+```python
 data = """Alfred,M,14,69,112.5
 Alice,F,13,56.5,84
 Barbara,F,13,65.3,98
@@ -40,3 +43,4 @@ for row in data.split('\n'):
     name, sex, age, weight, height = row.strip().split(',')
     current = Student(name=name, sex=sex, age=int(age), weight=float(weight), height=float(height))
     current.save()
+```
