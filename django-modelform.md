@@ -26,8 +26,9 @@ from django.core.shortcuts import render, redirect
 from django import forms
 from django.utils import timezone
 from myapp.forms import MyCommentForm
-def add_model(request):
- 
+
+
+def add_model(request): 
     if request.method == "POST":
         form = MyCommentForm(request.POST)
         if form.is_valid():
@@ -35,12 +36,8 @@ def add_model(request):
             model_instance.timestamp = timezone.now()
             model_instance.save()
             return redirect('/')
- 
-    else:
- 
-        form = MyCommentForm()
- 
-        return render(request, "my_template.html", {'form': form})
+    form = MyCommentForm()
+    return render(request, "my_template.html", {'form': form})
 ```
 
 - Template
