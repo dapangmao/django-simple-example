@@ -99,7 +99,7 @@ class Placeholder(View):
         content = 'Placeholder: {0} x {1}'.format(width, height)
         return hashlib.sha1(content.encode('utf-8')).hexdigest()
 
-    @etag(generate_etag)
+    @etag(self.generate_etag)
     def get(self, request, width, height):
         try:
             w = int(width)
