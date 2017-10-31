@@ -1,9 +1,29 @@
 1. Modle layer
   - Django will create 10 additional tables besides the original two tables
   ```
+  class PollManager(models.Manager):
+    def with_counts(self):
+        from django.db import connection
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT p.id, p.pud_date, sum(r.votes)
+                FROM polls_question p, polls_choice r
+                WHERE p.id = r.question_id
+                GROUP BY p.id, p.pub_date
+                ORDER BY p.pud_date DESC
+                """)
+            result_list = []
+            for row in cursor.fetchall():
+                p = self.model(id=row[0], question=row[1], poll_date=row[2])
+                p.num_responses = row[3]
+                result_list.append(p)
+        return result_list
+
+ 
   class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
+    statistics = PollManager()
 
 
   class Choice(models.Model):
